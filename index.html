@@ -1,0 +1,2226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Dossie executivo do projeto de captacao presencial da V3 Prev.">
+<title>Dossiê Vivo da Captação Presencial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light dark}
+html,body{margin:0;padding:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+:root{
+  --bg:#F4F5F3; --surface:#FFFFFF; --surface-2:#ECEEEC; --surface-3:#E2E5E3;
+  --line:#DBDFDC; --line-2:#C4CAC6; --line-3:#A9B1AD;
+  --text:#141A18; --text-2:#495451; --text-3:#77827E;
+  --accent:#1D5FA8; --accent-2:#164C86; --accent-soft:#E4EDF7; --accent-line:#B9CFE7;
+  --ok:#31804F; --ok-soft:#E3F0E8;
+  --warn:#B0740A; --warn-soft:#F6EDDC;
+  --crit:#AE2E24; --crit-soft:#F7E4E1;
+  --idle:#7B858A; --idle-soft:#EAECEB;
+  --shadow-1:0 1px 2px rgba(16,28,24,.05);
+  --shadow-2:0 6px 20px -8px rgba(16,28,24,.18);
+  --r:10px; --r-sm:6px;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Archivo","IBM Plex Sans",-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1214; --surface:#151B1E; --surface-2:#1B2327; --surface-3:#222C31;
+    --line:#263236; --line-2:#35444A; --line-3:#4A5C62;
+    --text:#E9EDEC; --text-2:#A6B2B2; --text-3:#7A8789;
+    --accent:#4E97DE; --accent-2:#7DB4E8; --accent-soft:#152B41; --accent-line:#27466A;
+    --ok:#3FA46E; --ok-soft:#132A20;
+    --warn:#E0A93E; --warn-soft:#2E2415;
+    --crit:#E0655A; --crit-soft:#331A18;
+    --idle:#7A8789; --idle-soft:#1E2629;
+    --shadow-1:0 1px 2px rgba(0,0,0,.3);
+    --shadow-2:0 8px 26px -10px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1214; --surface:#151B1E; --surface-2:#1B2327; --surface-3:#222C31;
+  --line:#263236; --line-2:#35444A; --line-3:#4A5C62;
+  --text:#E9EDEC; --text-2:#A6B2B2; --text-3:#7A8789;
+  --accent:#4E97DE; --accent-2:#7DB4E8; --accent-soft:#152B41; --accent-line:#27466A;
+  --ok:#3FA46E; --ok-soft:#132A20;
+  --warn:#E0A93E; --warn-soft:#2E2415;
+  --crit:#E0655A; --crit-soft:#331A18;
+  --idle:#7A8789; --idle-soft:#1E2629;
+  --shadow-1:0 1px 2px rgba(0,0,0,.3);
+  --shadow-2:0 8px 26px -10px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.15}
+p{margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+#app{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+.rail{border-right:1px solid var(--line);background:var(--surface);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.rail-top{padding:18px 18px 14px;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.03em}
+.brand span{color:var(--accent)}
+.brand-sub{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-3);margin-top:5px}
+.nav{flex:1;overflow-y:auto;padding:10px 10px 14px}
+.nav button{display:flex;gap:9px;align-items:baseline;width:100%;text-align:left;background:none;border:0;padding:7px 9px;border-radius:var(--r-sm);color:var(--text-2);font-size:12.5px;font-weight:500;line-height:1.3}
+.nav button:hover{background:var(--surface-2);color:var(--text)}
+.nav button.on{background:var(--accent-soft);color:var(--accent-2);font-weight:600}
+.nav .n{font-family:var(--mono);font-size:10px;color:var(--text-3);font-weight:500;flex:none;width:15px}
+.nav button.on .n{color:var(--accent)}
+.rail-foot{padding:10px;border-top:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap}
+.main{min-width:0;display:flex;flex-direction:column}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:9px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tb-strip{display:flex;gap:16px;flex-wrap:wrap;flex:1;min-width:0}
+.tb-item{display:flex;flex-direction:column;gap:1px}
+.tb-item .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--text-3)}
+.tb-item .v{font-family:var(--display);font-weight:700;font-size:13.5px;font-variant-numeric:tabular-nums}
+.tb-actions{display:flex;gap:6px}
+
+/* ---------- buttons ---------- */
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r-sm);padding:5px 11px;font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:background .12s,border-color .12s}
+.btn:hover{background:var(--surface-2);border-color:var(--line-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+.btn.ghost:hover{background:var(--surface-2);color:var(--text)}
+.btn.sm{padding:3px 8px;font-size:11px}
+.btn.danger:hover{color:var(--crit);border-color:var(--crit)}
+
+/* ---------- page ---------- */
+.page{padding:26px 26px 80px;max-width:1180px;width:100%}
+.page-head{margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.page-head h1{font-size:27px;font-weight:700;margin-top:7px}
+.page-head .lede{color:var(--text-2);margin-top:8px;max-width:64ch;font-size:13.5px}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:18px 0 20px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:7px 12px;font-size:12.5px;font-weight:500;color:var(--text-3);white-space:nowrap}
+.tabs button:hover{color:var(--text)}
+.tabs button.on{color:var(--text);border-bottom-color:var(--accent)}
+section.blk{margin-bottom:28px}
+.blk-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.blk-h h2{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.blk-h .hint{color:var(--text-3);font-size:11.5px}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:900px){.g3,.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}.g2{grid-template-columns:1fr}}
+@media(max-width:560px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+
+/* KPI tiles */
+.kpis{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.kpi{padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:3px;min-width:0}
+.kpi .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.kpi .v{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.05}
+.kpi .s{font-size:11.5px;color:var(--text-2)}
+.kpi.ok .v{color:var(--ok)} .kpi.warn .v{color:var(--warn)} .kpi.crit .v{color:var(--crit)}
+
+/* status pill */
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:100px;padding:2px 9px;font-size:11px;font-weight:600;font-family:var(--sans);white-space:nowrap;border:1px solid transparent}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.pill.ok{color:var(--ok);background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
+.pill.warn{color:var(--warn);background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 25%,transparent)}
+.pill.crit{color:var(--crit);background:var(--crit-soft);border-color:color-mix(in srgb,var(--crit) 25%,transparent)}
+.pill.idle{color:var(--idle);background:var(--idle-soft);border-color:color-mix(in srgb,var(--idle) 25%,transparent)}
+.pill.run{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-line)}
+
+/* progress */
+.bar{height:7px;border-radius:100px;background:var(--surface-3);overflow:hidden;position:relative}
+.bar > i{display:block;height:100%;border-radius:100px;background:var(--accent);transition:width .35s ease}
+.bar.ok > i{background:var(--ok)} .bar.warn > i{background:var(--warn)} .bar.crit > i{background:var(--crit)}
+.bar .target{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text-2);border-radius:2px}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:500;text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface-2)}
+td{padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+tbody tr:hover{background:var(--surface-2)}
+
+/* inputs */
+.f{width:100%;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:5px 8px;font-size:12.5px;min-width:0}
+.f:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+td .f{border-color:transparent;background:transparent;padding:3px 5px}
+td .f:hover{border-color:var(--line-2)}
+td .f:focus{background:var(--surface);border-color:var(--accent)}
+textarea.f{resize:vertical;min-height:60px;line-height:1.45}
+.f.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+label.fl{display:flex;flex-direction:column;gap:4px}
+label.fl > span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.chk{display:flex;gap:9px;align-items:flex-start;padding:7px 9px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);margin-bottom:6px}
+.chk:hover{border-color:var(--line-2)}
+.chk input[type=checkbox]{margin-top:2px;width:15px;height:15px;accent-color:var(--accent);flex:none}
+.chk .t{flex:1;min-width:0}
+.chk .t .ti{font-weight:500}
+.chk.done .t .ti{color:var(--text-3);text-decoration:line-through}
+.chk .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.chk .meta .f{width:auto;max-width:170px;font-size:11.5px;padding:2px 6px}
+
+.empty{color:var(--text-3);font-size:12.5px;padding:14px;text-align:center;border:1px dashed var(--line-2);border-radius:var(--r)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--text-2)}
+.dim{color:var(--text-3)}
+.tiny{font-size:11px}
+.lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.hr{height:1px;background:var(--line);margin:18px 0}
+.tag{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);color:var(--text-2)}
+
+/* ---------- capa ---------- */
+.cover{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow-2)}
+.cover-top{padding:30px 30px 26px;border-bottom:1px solid var(--line);background:
+  radial-gradient(120% 140% at 100% 0%, var(--accent-soft) 0%, transparent 58%)}
+.cover-top .co-brand{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.cover-top h1{font-size:clamp(28px,4.2vw,42px);font-weight:800;letter-spacing:-.035em;margin-top:12px;max-width:16ch}
+.cover-top .co-sub{font-size:14.5px;color:var(--text-2);margin-top:10px;max-width:56ch}
+.cover-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:900px){.cover-strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.cover-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cover-strip .kpi{border-bottom:0}
+.cover-strip .kpi:last-child{border-right:0}
+.where{padding:18px 30px;border-top:1px solid var(--line);background:var(--surface-2)}
+.where .lbl{margin-bottom:6px}
+.where p{font-family:var(--display);font-weight:600;font-size:16.5px;line-height:1.4;letter-spacing:-.01em;max-width:78ch}
+
+/* insight cards */
+.insight{border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:var(--r);padding:14px 16px;background:var(--surface)}
+.insight.att{border-left-color:var(--crit)}
+.insight.opp{border-left-color:var(--ok)}
+.insight h3{font-size:12px;font-family:var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--text-3);font-weight:500}
+.insight p{margin-top:8px;font-size:13.5px;line-height:1.5}
+
+/* next actions */
+.next{list-style:none;padding:0;margin:0;counter-reset:na}
+.next li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.next li:last-child{border-bottom:0}
+.next li::before{counter-increment:na;content:counter(na);font-family:var(--mono);font-size:10px;color:var(--text-3);border:1px solid var(--line-2);border-radius:5px;width:19px;height:19px;display:grid;place-items:center;flex:none;margin-top:1px}
+.next .ttl{font-weight:500;font-size:13px}
+.next .sub{font-size:11.5px;color:var(--text-3);margin-top:2px}
+
+/* roadmap */
+.phases{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.ph{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);text-align:left;background:none;border-left:0;border-right:0;border-top:0;width:100%}
+.ph:last-child{border-bottom:0}
+.ph:hover{background:var(--surface-2)}
+.ph.on{background:var(--accent-soft)}
+.ph .idx{font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:.06em}
+.ph .nm{font-family:var(--display);font-weight:600;font-size:14px}
+.ph .pr{margin-top:6px;display:flex;gap:9px;align-items:center}
+.ph .pr .bar{flex:1;max-width:220px}
+.ph .pr .pc{font-family:var(--mono);font-size:10.5px;color:var(--text-3)}
+.ph-detail{border:1px solid var(--accent-line);border-radius:var(--r);background:var(--surface);padding:18px;margin-top:14px}
+
+/* gantt */
+.gantt{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow-x:auto}
+.gantt table{min-width:760px}
+.gtrack{position:relative;height:16px;background:var(--surface-3);border-radius:4px;min-width:220px}
+.gtrack > i{position:absolute;top:0;bottom:0;border-radius:4px;background:var(--accent);opacity:.85}
+.gtrack > i.ok{background:var(--ok)} .gtrack > i.warn{background:var(--warn)} .gtrack > i.crit{background:var(--crit)} .gtrack > i.idle{background:var(--line-3)}
+.gtoday{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--crit)}
+
+/* milestones */
+.ms{display:flex;flex-direction:column;gap:0;padding-left:6px}
+.ms .m{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;padding:10px 0;position:relative}
+.ms .m::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:1px;background:var(--line)}
+.ms .m:first-child::before{top:50%} .ms .m:last-child::before{bottom:50%}
+.ms .m .node{width:11px;height:11px;border-radius:50%;border:2px solid var(--line-2);background:var(--surface);z-index:1;margin-left:5px}
+.ms .m.done .node{background:var(--ok);border-color:var(--ok)}
+.ms .m.now .node{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+
+/* funnel / theory */
+.theory{display:flex;flex-direction:column;gap:0}
+.theory .step{display:grid;grid-template-columns:118px 1fr;gap:16px;align-items:center;padding:11px 14px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);position:relative}
+.theory .arrow{height:16px;display:grid;place-items:center;color:var(--line-3);font-size:11px}
+.theory .step .st{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}
+.theory .step .sd{font-size:12.5px;color:var(--text-2)}
+.theory .step.ext{border-style:dashed;background:var(--surface-2)}
+.theory .step.ext .st{color:var(--text-3)}
+
+/* score */
+.score{font-family:var(--display);font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+
+/* rec cards */
+.rec{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.rec + .rec{margin-top:12px}
+.rec-h{padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--surface-2);flex-wrap:wrap}
+.rec-h .t{font-family:var(--display);font-weight:600;font-size:13.5px}
+.rec-b{padding:14px 16px;display:grid;gap:12px}
+.qa{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:start}
+@media(max-width:640px){.qa{grid-template-columns:1fr;gap:3px}}
+.qa .q{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding-top:2px}
+.qa .a{font-size:13px;line-height:1.5}
+.rec-f{padding:10px 16px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.why{font-size:11.5px;color:var(--text-3);font-style:normal;border-left:2px solid var(--line-2);padding-left:9px}
+
+/* comparison rows */
+.cmp{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.cmp .row{display:grid;grid-template-columns:150px 1fr 92px 92px 74px;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line)}
+.cmp .row:last-child{border-bottom:0}
+.cmp .row.head{background:var(--surface-2);padding-top:8px;padding-bottom:8px}
+.cmp .row.head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.cmp .nm{font-weight:500;font-size:12.5px}
+.cmp .num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;font-size:12.5px}
+@media(max-width:760px){.cmp .row{grid-template-columns:1fr 1fr;row-gap:6px}.cmp .row.head{display:none}.cmp .bar{grid-column:1/-1}}
+
+/* report */
+.report{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:34px 40px;max-width:900px}
+.report h2{font-size:19px;margin:28px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.report h2:first-of-type{margin-top:0}
+.report p{margin:8px 0;line-height:1.6;max-width:68ch}
+.report ul{margin:8px 0;padding-left:20px;line-height:1.6}
+@media(max-width:640px){.report{padding:22px 18px}}
+
+/* presentation */
+.present{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column}
+.present-body{flex:1;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:44px 6vw}
+.slide{width:100%;max-width:1080px}
+.slide .s-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.slide h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-.035em;margin-top:14px}
+.slide h2{font-size:clamp(22px,3.4vw,34px);font-weight:700;letter-spacing:-.03em;margin-top:12px}
+.slide .s-body{margin-top:26px;font-size:clamp(14px,1.5vw,17px);line-height:1.6}
+.slide .s-body p{margin:10px 0;max-width:70ch}
+.slide .s-body li{margin:7px 0}
+.present-foot{border-top:1px solid var(--line);padding:10px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface)}
+.present-foot .pg{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+
+/* toast */
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:200;background:var(--text);color:var(--bg);padding:9px 16px;border-radius:100px;font-size:12.5px;font-weight:500;box-shadow:var(--shadow-2);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+/* demo banner */
+.demo-banner{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--warn);border-radius:var(--r);padding:9px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px;font-size:12.5px;font-weight:500}
+
+/* mobile */
+.mobile-nav{display:none}
+@media(max-width:840px){
+  #app{grid-template-columns:1fr}
+  .rail{display:none}
+  .mobile-nav{display:flex;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:40}
+  .mobile-nav select{flex:1}
+  .page{padding:18px 16px 70px}
+  .topbar{padding:9px 16px}
+  .cover-top{padding:22px 20px}
+  .where{padding:16px 20px}
+}
+@media print{
+  .rail,.topbar,.tabs,.mobile-nav,.btn,.demo-banner{display:none!important}
+  #app{display:block}
+  .page{padding:0;max-width:none}
+  .report{border:0;padding:0}
+  body{background:#fff;color:#000}
+}
+
+/* ---------- login ---------- */
+#login{position:fixed;inset:0;z-index:500;background:var(--bg);display:grid;place-items:center;padding:24px;overflow-y:auto}
+.lg-card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:30px;box-shadow:var(--shadow-2)}
+.lg-brand{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.03em;margin-bottom:18px}
+.lg-brand span{color:var(--accent)}
+.lg-card h1{font-size:21px;font-weight:700}
+.lg-sub{color:var(--text-2);font-size:13.5px;margin-top:10px;line-height:1.55}
+.lg-msg{margin-top:14px;padding:10px 12px;border-radius:8px;background:var(--crit-soft);color:var(--crit);font-size:12.5px}
+.lg-card form{margin-top:20px}
+.lg-pe{margin-top:14px;font-size:11.5px;color:var(--text-3)}
+/* ---------- chips do topo ---------- */
+.tb-actions{align-items:center}
+.quem{font-size:11.5px;color:var(--text-2);border:1px solid var(--line);background:var(--surface);border-radius:100px;padding:3px 10px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.salvo{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);opacity:0;transition:opacity .2s}
+.salvo.on{opacity:1}
+/* ---------- somente leitura ---------- */
+.somente-leitura .f{pointer-events:none;border-color:transparent;background:transparent}
+.somente-leitura input[type=checkbox]{pointer-events:none;opacity:.65}
+.somente-leitura .btn.primary,.somente-leitura .btn.danger{display:none}
+/* ---------- histórico ---------- */
+.hist{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.hist:last-child{border-bottom:0}
+.hist .hq{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hist .ho{color:var(--text-2)}
+.hist .hd{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+@media(max-width:560px){.hist{grid-template-columns:1fr;gap:2px}.quem{display:none}}
+</style>
+</head>
+<body>
+<noscript><div style="max-width:600px;margin:60px auto;padding:24px;border:1px solid #C4CAC6;border-radius:10px;font:15px/1.55 system-ui,sans-serif">
+<h2 style="margin:0 0 8px">JavaScript desativado</h2><p style="margin:0">Este dossiê é interativo e precisa de JavaScript ativado no navegador.</p></div></noscript>
+
+<div id="login" hidden></div>
+<div id="app">
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="brand">V3 <span>PREV</span></div>
+      <div class="brand-sub">Dossiê vivo do projeto</div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="rail-foot">
+      <button class="btn sm ghost" id="btn-present">▶ Apresentar</button>
+      <button class="btn sm ghost" id="btn-theme">◐ Tema</button>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="mobile-nav">
+      <select class="f" id="msel"></select>
+      <button class="btn sm" id="btn-present-m">▶</button>
+    </div>
+    <div class="topbar" id="topbar"></div>
+    <div class="page" id="view"></div>
+  </div>
+</div>
+<div id="toast"></div>
+<div id="present-root"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./config.js"></script>
+<script>
+
+/* ============================================================
+   DOSSIÊ VIVO — V3 PREV · CAPTAÇÃO PRESENCIAL
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ---------- util ---------- */
+const $ = (s,r)=> (r||document).querySelector(s);
+const el = (t,a,h)=>{const n=document.createElement(t);if(a)for(const k in a){if(k==="class")n.className=a[k];else if(k==="html")n.innerHTML=a[k];else n.setAttribute(k,a[k]);}if(h!=null)n.textContent=h;return n;};
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = p => (p||"i")+Math.random().toString(36).slice(2,9);
+const num = v => { const n = typeof v==="number"?v:parseFloat(String(v==null?"":v).replace(/\./g,"").replace(",",".")); return isFinite(n)?n:0; };
+const brl = v => "R$ "+Math.round(num(v)).toLocaleString("pt-BR");
+const brl2 = v => "R$ "+num(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = (v,d)=> (isFinite(v)?(num(v)).toLocaleString("pt-BR",{minimumFractionDigits:d||0,maximumFractionDigits:d||0}):"0")+"%";
+const int = v => Math.round(num(v)).toLocaleString("pt-BR");
+const clamp = (v,a,b)=> Math.max(a,Math.min(b,v));
+const today = ()=> new Date().toISOString().slice(0,10);
+const dISO = d => d instanceof Date ? d.toISOString().slice(0,10) : String(d||"");
+const addDays = (iso,n)=>{const d=new Date((iso||today())+"T12:00:00");d.setDate(d.getDate()+n);return dISO(d);};
+const daysBetween = (a,b)=> Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/864e5);
+const fmtDate = iso => { if(!iso) return "—"; const p=String(iso).split("-"); return p.length===3? p[2]+"/"+p[1]+"/"+p[0] : iso; };
+const fmtDateShort = iso => { if(!iso) return "—"; const p=String(iso).split("-"); return p.length===3? p[2]+"/"+p[1] : iso; };
+const safeDiv = (a,b)=> (num(b)===0?0:num(a)/num(b));
+
+function get(obj,path){ let c=obj; for(const k of String(path).split(".")){ if(c==null) return undefined; c=c[k]; } return c; }
+function setPath(obj,path,val){ const ks=String(path).split("."); let c=obj; for(let i=0;i<ks.length-1;i++){ if(c[ks[i]]==null) c[ks[i]] = /^\d+$/.test(ks[i+1])?[]:{}; c=c[ks[i]]; } c[ks[ks.length-1]]=val; }
+
+const STATUS = {
+  nao_iniciado:{l:"Não iniciado", c:"idle"},
+  em_andamento:{l:"Em andamento", c:"run"},
+  concluido:{l:"Concluído", c:"ok"},
+  atencao:{l:"Atenção", c:"warn"},
+  critico:{l:"Crítico", c:"crit"},
+  bloqueado:{l:"Bloqueado", c:"crit"}
+};
+const statusPill = s => { const d = STATUS[s]||STATUS.nao_iniciado; return '<span class="pill '+d.c+'"><i class="dot"></i>'+d.l+'</span>'; };
+const semPill = (c,label) => '<span class="pill '+c+'"><i class="dot"></i>'+esc(label)+'</span>';
+
+/* ============================================================
+   SEED — O PLANO COMPLETO
+   ============================================================ */
+const BASE_START = "2026-09-08";
+
+const FASES_SEED = [
+  {n:"Estratégia e validação", obj:"Validar a tese do projeto e obter aprovação formal da diretoria para investir na pesquisa territorial.",
+   ent:"Projeto aprovado para pesquisa territorial.", crit:"Ata de aprovação da diretoria registrada nas Decisões.", dur:10, resp:"CEO",
+   t:["Definir objetivo do canal","Definir público-alvo","Definir hipótese central","Definir modelo de abordagem","Definir KPIs do projeto","Definir orçamento do piloto","Validar compliance da abordagem","Definir modelo do piloto","Aprovação da diretoria"]},
+  {n:"Inteligência territorial", obj:"Descobrir, sem sair do escritório, onde vale a pena testar a captação presencial.",
+   ent:"Lista priorizada de locais candidatos com score.", crit:"Mínimo de 15 locais avaliados e 5 classificados como TESTAR ou acima.", dur:10, resp:"Diretor de Marketing",
+   t:["Mapear hospitais e prontos-socorros da praça","Mapear clínicas de fisioterapia e reabilitação","Mapear agências do INSS e perícia","Mapear terminais e polos de fluxo","Levantar perfil socioeconômico das regiões","Aplicar critérios de score em cada local","Priorizar os 3 locais do piloto"]},
+  {n:"Pesquisa de campo", obj:"Transformar hipótese em evidência: ir aos locais e medir fluxo, receptividade e viabilidade real.",
+   ent:"Relatório de campo com ranking dos locais.", crit:"Pelo menos 2 visitas por local candidato, com fluxo e receptividade registrados.", dur:12, resp:"Diretor de Marketing",
+   t:["Definir roteiro e formulário de visita","Agendar visitas aos locais priorizados","Executar visitas de observação","Testar abordagem-piloto informal","Registrar fluxo e receptividade","Consolidar ranking dos locais","Definir os 3 locais definitivos"]},
+  {n:"Desenho operacional", obj:"Definir exatamente como a operação de rua vai funcionar no dia a dia.",
+   ent:"Manual operacional da captação presencial.", crit:"Manual aprovado por Marketing, Comercial e Compliance.", dur:10, resp:"Diretor de Marketing",
+   t:["Definir quantidade de captadores","Definir jornada e escala","Definir perfil do captador","Definir modelo de remuneração","Definir programa de treinamento","Definir uniforme e identificação","Definir material de apoio","Definir script de abordagem","Definir procedimento de cadastro","Definir passagem do lead para o CRM","Definir rotina de acompanhamento","Validar compliance do modelo"]},
+  {n:"Preparação da equipe", obj:"Ter em campo pessoas selecionadas, treinadas e alinhadas ao script e ao compliance.",
+   ent:"Equipe do piloto pronta para operar.", crit:"100% dos captadores treinados e com material entregue.", dur:14, resp:"Diretor de Marketing",
+   t:["Publicar vaga / acionar rede de indicação","Selecionar candidatos","Definir vínculo e contrato","Aplicar treinamento de produto (auxílio-acidente)","Aplicar treinamento de abordagem","Aplicar treinamento de LGPD e consentimento","Simular abordagem (role-play)","Entregar uniforme e material"]},
+  {n:"Preparação tecnológica", obj:"Garantir que o lead captado na rua entre no CRM existente sem retrabalho e com rastreabilidade.",
+   ent:"Fluxo lead-rua → CRM testado ponta a ponta.", crit:"Lead de teste percorrendo todo o fluxo e aparecendo nos indicadores.", dur:7, resp:"Diretor Comercial",
+   t:["Definir em qual CRM o lead entra","Criar origem “Captação Presencial” no CRM","Identificar cada captador como origem/vendedor","Definir número de WhatsApp de recepção","Definir processo de transferência do lead","Definir indicadores consolidados a extrair","Executar teste com lead fictício","Validar o fluxo com o time comercial"]},
+  {n:"Piloto", obj:"Rodar 30 dias de operação real, controlada, com registro diário de esforço, resultado e custo.",
+   ent:"30 dias de operação com diário completo.", crit:"Mínimo de 25 dias úteis registrados no diário do piloto.", dur:30, resp:"Diretor de Marketing",
+   t:["Iniciar operação nos 3 locais","Registrar diariamente o desempenho","Acompanhamento semanal com os captadores","Auditar qualidade dos leads gerados","Registrar incidentes e aprendizados"]},
+  {n:"Medição", obj:"Consolidar os números do piloto e comparar com o planejado, sem interpretação otimista.",
+   ent:"Painel de resultados consolidado.", crit:"Leads, pastas, investimento, CAC e ROI apurados e conferidos.", dur:5, resp:"Diretor Financeiro",
+   t:["Consolidar leads e pastas por local","Consolidar investimento realizado","Apurar CAC e ROI","Comparar planejado x realizado","Registrar principais desvios"]},
+  {n:"Otimização", obj:"Corrigir o que os números mostraram antes de decidir sobre escala.",
+   ent:"Ciclo de ajustes executado e medido.", crit:"Ações corretivas concluídas e efeito medido por pelo menos 7 dias.", dur:14, resp:"Diretor de Marketing",
+   t:["Selecionar causas prováveis dos desvios","Definir ações corretivas","Executar redistribuição de locais/horários","Reforçar treinamento onde necessário","Medir o efeito das ações"]},
+  {n:"Decisão GO / NO GO", obj:"Decidir, com critério definido antes, se o canal vira operação permanente.",
+   ent:"Decisão formal registrada.", crit:"Todos os critérios avaliados e decisão registrada pelo CEO.", dur:3, resp:"CEO",
+   t:["Fechar os números finais do piloto","Avaliar cada critério de decisão","Apresentar à diretoria","Registrar a decisão formal"]},
+  {n:"Escala", obj:"Crescer o canal por etapas, liberando investimento apenas com critério atingido.",
+   ent:"Canal presencial em operação permanente.", crit:"Cada etapa só avança com CAC dentro do limite na etapa anterior.", dur:90, resp:"CEO",
+   t:["Aprovar etapa de escala","Contratar novos captadores","Abrir novos locais","Replicar treinamento","Acompanhar CAC por etapa"]}
+];
+
+function seedFases(){
+  let cursor = BASE_START;
+  return FASES_SEED.map((f,i)=>{
+    const inicio = cursor, fim = addDays(cursor, f.dur);
+    cursor = addDays(fim, 1);
+    return { id:"F"+i, num:i, nome:f.n, objetivo:f.obj, entregavel:f.ent, criterio:f.crit,
+      responsavel:f.resp, inicio, fim, investimento:0, status:"nao_iniciado", obs:"", resultado:"",
+      tarefas: f.t.map(t=>({id:uid("t"), titulo:t, responsavel:f.resp, prazo:fim, status:"nao_iniciado", obs:"", doc:"", concluidoEm:""})) };
+  });
+}
+
+const COMPLIANCE_SEED = ["Modelo de abordagem validado","Script validado","Modelo de remuneração validado","Relacionamento com escritórios/parceiros validado","LGPD validada","Fluxo de consentimento validado","Materiais aprovados","Responsável jurídico registrado"]
+  .map(t=>({id:uid("c"), item:t, responsavel:"", data:"", status:"nao_iniciado", obs:"", doc:""}));
+
+const MARCOS_SEED = ["Projeto aprovado","Territórios definidos","Pesquisa concluída","Equipe contratada","Treinamento concluído","Piloto iniciado","Primeiro resultado","Piloto concluído","GO / NO GO","Escala iniciada"]
+  .map((t,i)=>({id:uid("m"), nome:t, data:"", status:"nao_iniciado", faseRef:[0,1,2,4,4,6,6,7,9,10][i]}));
+
+const INVEST_SEED = [
+  {cat:"Pessoas", item:"Remuneração dos captadores (piloto)", prev:7000},
+  {cat:"Pessoas", item:"Encargos / ajuda de custo", prev:1200},
+  {cat:"Equipamentos", item:"Celulares / chips", prev:1200},
+  {cat:"Material", item:"Uniforme e crachá", prev:600},
+  {cat:"Material", item:"Panfletos e material de apoio", prev:900},
+  {cat:"Tecnologia", item:"Ajustes e origem no CRM", prev:500},
+  {cat:"Transporte", item:"Deslocamento da equipe", prev:1400},
+  {cat:"Treinamento", item:"Treinamento e material didático", prev:700},
+  {cat:"Outros", item:"Reserva de contingência", prev:500}
+].map(r=>({id:uid("v"), categoria:r.cat, item:r.item, previsto:r.prev, realizado:0, status:"nao_iniciado", obs:""}));
+
+const RISCOS_SEED = [
+  {r:"Fluxo de pessoas menor que o observado na pesquisa", p:"media", i:"alto", m:"Manter 2 locais reservas já pontuados para troca rápida."},
+  {r:"Abordagem interpretada como captação irregular de clientes", p:"media", i:"critico", m:"Script validado por compliance; material sem promessa de resultado; registro de consentimento."},
+  {r:"Rotatividade de captadores durante o piloto", p:"alta", i:"medio", m:"Remuneração com parte variável e substituto treinado em reserva."},
+  {r:"Lead de rua com qualidade abaixo do lead digital", p:"media", i:"alto", m:"Auditoria semanal de qualidade e feedback imediato ao captador."},
+  {r:"Sobrecarga da equipe comercial na triagem", p:"baixa", i:"medio", m:"Definir teto diário de leads por captador durante o piloto."}
+].map(x=>({id:uid("r"), risco:x.r, probabilidade:x.p, impacto:x.i, responsavel:"Diretor de Marketing", mitigacao:x.m, status:"em_andamento"}));
+
+function seedState(){
+  return {
+    geral:{ nomeProjeto:"Captação Presencial de Clientes — Auxílio-Acidente", responsavel:"Diretor de Marketing",
+      statusManual:"auto", demo:false, criadoEm:today(),
+      contexto:"A V3 Prev opera hoje com leads vindos de tráfego pago terceirizado, de listas de parceiros que compram as pastas e de indicações. São canais que funcionam, mas concentram a aquisição em poucas fontes, com custo definido por terceiros e pouca previsibilidade de volume.",
+      oportunidade:"Existe um público que nunca chega ao digital: a pessoa que sofreu um acidente, está em tratamento e circula por hospitais, clínicas de fisioterapia e agências do INSS sem saber que tem direito ao auxílio-acidente. Esse público está fisicamente concentrado e hoje não é disputado por nenhum canal da V3.",
+      publico:"Pessoas com sequela permanente decorrente de acidente de qualquer natureza, em tratamento ou pós-alta, que circulam por hospitais, prontos-socorros, clínicas de fisioterapia/reabilitação e agências do INSS.",
+      hipotese:"Se abordarmos essas pessoas no momento e no lugar em que o tema já está presente na vida delas, a taxa de interesse será maior que a do canal digital e o custo por pasta ficará abaixo do CAC atual.",
+      modelo:"Captadores identificados, treinados em produto e LGPD, atuando em pontos fixos previamente validados, com script aprovado. O captador não fecha nada: ele qualifica interesse, coleta consentimento e cadastra o lead na origem “Captação Presencial” do CRM. Dali em diante o processo é o processo normal da V3.",
+      objetivo:"Comprovar, em 30 dias de piloto controlado, que a captação presencial gera pastas a um custo por aquisição igual ou inferior ao limite definido, sem risco de compliance.",
+      criterioSucesso:"Atingir a meta de pastas do piloto com CAC dentro do limite e sem nenhuma ocorrência de compliance.",
+      criterioEscala:"Só ampliar o investimento depois de dois ciclos consecutivos com CAC dentro do limite e qualidade de lead equivalente à dos demais canais.",
+      goNoGo:{ decisao:"", data:"", por:"", justificativa:"" },
+      encerramento:{ aprendizados:"", melhoresLocais:"", melhoresPraticas:"", errros:"", manter:"", alterar:"" },
+      causas:[]
+    },
+    premissas:{ dataInicio:BASE_START, receitaPorPasta:1250, custoCaptadorMes:3500, metaPastasCaptadorMes:19,
+      cacMax:300, orcamento:14000, numCaptadores:2, numLocais:3, duracaoPiloto:30,
+      convLeadQualificado:50, convQualificadoTriagem:60, convTriagemPasta:65,
+      metaLeadsCaptadorMes:120, custoFixoMes:0 },
+    fases:{ lista:seedFases() },
+    marcos:{ lista:MARCOS_SEED },
+    territorios:{ locais:[] },
+    pesquisa:{ visitas:[] },
+    equipe:{ pessoas:[
+      {id:uid("p"), nome:"Rafael Coelho", funcao:"CEO", responsabilidade:"Patrocinador do projeto e decisão GO/NO GO", fase:"Todas", status:"em_andamento", entrada:BASE_START, obs:""},
+      {id:uid("p"), nome:"", funcao:"Diretor de Marketing", responsabilidade:"Dono do projeto: territórios, equipe, piloto e atualização do dossiê", fase:"Todas", status:"em_andamento", entrada:BASE_START, obs:""},
+      {id:uid("p"), nome:"", funcao:"Diretor Comercial", responsabilidade:"Recepção do lead no CRM e qualidade da triagem", fase:"Fase 5 e 6", status:"nao_iniciado", entrada:"", obs:""},
+      {id:uid("p"), nome:"", funcao:"Diretor Financeiro", responsabilidade:"Apuração de investimento, CAC e ROI", fase:"Fase 7", status:"nao_iniciado", entrada:"", obs:""}
+    ]},
+    piloto:{ config:{ inicio:"", fim:"", captadores:2, locais:3, duracao:30, orcamento:14000, objetivo:"Validar se o modelo consegue gerar aquisição economicamente viável." }, diario:[] },
+    tecnologia:{ itens:["CRM definido","Origem “Captação Presencial” criada","Captadores identificados no CRM","WhatsApp de recepção definido","Processo de transferência definido","Indicadores consolidados definidos","Teste com lead fictício realizado","Fluxo validado com o comercial"].map(t=>({id:uid("tec"), item:t, status:"nao_iniciado", responsavel:"Diretor Comercial", obs:""})) },
+    investimento:{ itens:INVEST_SEED },
+    acoes:{ lista:[], recusadas:[] },
+    decisoes:{ lista:[] },
+    riscos:{ lista:RISCOS_SEED },
+    compliance:{ itens:COMPLIANCE_SEED },
+    documentos:{ lista:[] }
+  };
+}
+
+const DOC_KEYS = ["geral","premissas","fases","marcos","territorios","pesquisa","equipe","piloto","tecnologia","investimento","acoes","decisoes","riscos","compliance","documentos"];
+
+/* ============================================================
+   STORE — Supabase (login por e-mail, dados compartilhados)
+   ============================================================ */
+const Store = {
+  data: seedState(), sb:null, user:null, membro:null, ready:false, timers:{}, historico:[], _ultimoSave:0,
+
+  async init(){
+    const cfg = window.DOSSIE_CONFIG || {};
+    if(!cfg.supabaseUrl || !cfg.supabaseAnonKey || /COLE_AQUI/.test(String(cfg.supabaseUrl)+String(cfg.supabaseAnonKey))){
+      return Login.erroConfig();
+    }
+    if(!(await carregarSupabase())) return Login.erroBiblioteca();
+    try{
+      this.sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    }catch(e){ return Login.erroConfig(e.message); }
+
+    this.sb.auth.onAuthStateChange((evt, session)=>{
+      if(evt === "SIGNED_OUT"){ location.reload(); }
+    });
+    const { data } = await this.sb.auth.getSession();
+    if(data && data.session) return this.entrar(data.session);
+    Login.mostrar();
+  },
+
+  async entrar(session){
+    this.user = session.user;
+    Login.carregando("Verificando seu acesso…");
+    const { data: membro, error } = await this.sb.from("membros").select("*").eq("email", this.user.email).maybeSingle();
+    if(error){ return Login.semAcesso(this.user.email, error.message); }
+    if(!membro){ return Login.semAcesso(this.user.email); }
+    this.membro = membro;
+    if(membro.papel === "leitor") document.body.classList.add("somente-leitura");
+    Login.carregando("Carregando o dossiê…");
+    await this.carregar();
+    this.assinar();
+    this.ready = true;
+    Login.esconder();
+    App.boot();
+  },
+
+  async carregar(){
+    const { data, error } = await this.sb.from("dossie_docs").select("chave,conteudo,atualizado_por,atualizado_em");
+    if(error){ toast("Não foi possível carregar: "+error.message); return; }
+    (data||[]).forEach(r=>{ if(DOC_KEYS.indexOf(r.chave)>=0 && r.conteudo) this.data[r.chave] = r.conteudo; });
+    await this.carregarHistorico();
+  },
+
+  async carregarHistorico(){
+    const { data } = await this.sb.from("dossie_historico").select("chave,email,em").order("em",{ascending:false}).limit(8);
+    this.historico = data || [];
+  },
+
+  assinar(){
+    try{
+      this.sb.channel("dossie-docs")
+        .on("postgres_changes", {event:"*", schema:"public", table:"dossie_docs"}, payload=>{
+          const r = payload.new; if(!r || DOC_KEYS.indexOf(r.chave)<0) return;
+          if(r.atualizado_por === (this.user&&this.user.email) && Date.now()-this._ultimoSave < 4000) return;
+          this.data[r.chave] = r.conteudo;
+          this.carregarHistorico().then(()=>{ if(this.ready) App.onRemote(r.chave); });
+        })
+        .subscribe();
+    }catch(e){ /* sem tempo real: os dados continuam sendo salvos */ }
+  },
+
+  save(key, immediate){
+    if(!this.sb || !this.ready) return;
+    if(this.timers[key]) clearTimeout(this.timers[key]);
+    const run = async ()=>{
+      this._ultimoSave = Date.now();
+      const { error } = await this.sb.from("dossie_docs").upsert({
+        chave: key, conteudo: this.data[key],
+        atualizado_por: this.user.email, atualizado_em: new Date().toISOString()
+      }, { onConflict:"chave" });
+      if(error) toast("Não foi possível salvar: "+error.message);
+      else { App.marcarSalvo(); this.carregarHistorico(); }
+    };
+    if(immediate) run(); else this.timers[key] = setTimeout(run, 800);
+  },
+  saveAll(){ DOC_KEYS.forEach(k=>this.save(k,true)); },
+  async sair(){ try{ await this.sb.auth.signOut(); }catch(e){} location.reload(); }
+};
+const S = ()=> Store.data;
+
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("on"),2600); }
+
+/* ============================================================
+   CÁLCULOS DERIVADOS
+   ============================================================ */
+const SCORE_W = {fluxo:30, hospital:20, perfil:25, seguranca:10, operacional:15};
+function localScore(l){
+  let s=0, wsum=0;
+  for(const k in SCORE_W){ const v = clamp(num(l[k]),0,5); s += (v/5)*SCORE_W[k]; wsum += SCORE_W[k]; }
+  return Math.round(s);
+}
+function localClass(sc){
+  if(sc>=80) return {l:"EXCELENTE", c:"ok"};
+  if(sc>=65) return {l:"ALTO", c:"ok"};
+  if(sc>=50) return {l:"TESTAR", c:"run"};
+  if(sc>=35) return {l:"BAIXO", c:"warn"};
+  return {l:"DESCARTAR", c:"crit"};
+}
+
+function D(){
+  const s = S(), pr = s.premissas, fases = s.fases.lista, di = s.piloto.diario;
+  const t = today();
+
+  /* tarefas */
+  let tot=0, done=0, late=0, doing=0;
+  const lateList=[], nextList=[];
+  fases.forEach((f,fi)=>{
+    (f.tarefas||[]).forEach(tk=>{
+      tot++;
+      if(tk.status==="concluido") done++;
+      else {
+        if(tk.status==="em_andamento") doing++;
+        if(tk.prazo && tk.prazo < t){ late++; lateList.push({fase:f, fi, t:tk}); }
+        else nextList.push({fase:f, fi, t:tk});
+      }
+    });
+  });
+  const progresso = tot? Math.round(done/tot*100) : 0;
+
+  /* fase atual */
+  let faseAtual = fases.find(f=> f.status==="em_andamento");
+  if(!faseAtual) faseAtual = fases.find(f=> (f.tarefas||[]).some(x=>x.status!=="concluido"));
+  if(!faseAtual) faseAtual = fases[fases.length-1];
+  const faseIdx = fases.indexOf(faseAtual);
+  const faseProg = fp => { const ts=fp.tarefas||[]; return ts.length? Math.round(ts.filter(x=>x.status==="concluido").length/ts.length*100):0; };
+
+  /* piloto realizado */
+  const agg = di.reduce((a,d)=>{
+    a.leads+=num(d.leads); a.qualificados+=num(d.qualificados); a.triagens+=num(d.triagens);
+    a.pastas+=num(d.pastas); a.custo+=num(d.investimento); a.dias++;
+    a.captadoresMax = Math.max(a.captadoresMax, num(d.captadores));
+    return a;
+  },{leads:0,qualificados:0,triagens:0,pastas:0,custo:0,dias:0,captadoresMax:0});
+
+  const invPrev = s.investimento.itens.reduce((a,i)=>a+num(i.previsto),0);
+  const invReal = s.investimento.itens.reduce((a,i)=>a+num(i.realizado),0) + agg.custo;
+  const orcamento = num(pr.orcamento) || invPrev;
+
+  const meses = num(pr.duracaoPiloto)/30 || 1;
+  const capt = num(pr.numCaptadores) || 1;
+  const metaPastas = Math.round(capt * num(pr.metaPastasCaptadorMes) * meses);
+  const metaLeads = Math.round(capt * num(pr.metaLeadsCaptadorMes) * meses);
+  const metaReceita = metaPastas * num(pr.receitaPorPasta);
+  const metaQualificados = Math.round(metaLeads * num(pr.convLeadQualificado)/100);
+  const metaTriagens = Math.round(metaQualificados * num(pr.convQualificadoTriagem)/100);
+
+  const receita = agg.pastas * num(pr.receitaPorPasta);
+  const cac = agg.pastas>0 ? invReal/agg.pastas : 0;
+  const roi = invReal>0 ? (receita-invReal)/invReal*100 : 0;
+  const prodCaptador = capt>0 ? agg.pastas/capt : 0;
+  const convLeadPasta = agg.leads>0 ? agg.pastas/agg.leads*100 : 0;
+
+  /* por local */
+  const porLocal = {};
+  di.forEach(d=>{
+    const k = (d.local||"Não informado").trim() || "Não informado";
+    if(!porLocal[k]) porLocal[k] = {local:k, leads:0, qualificados:0, triagens:0, pastas:0, custo:0, dias:0};
+    const o = porLocal[k];
+    o.leads+=num(d.leads); o.qualificados+=num(d.qualificados); o.triagens+=num(d.triagens);
+    o.pastas+=num(d.pastas); o.custo+=num(d.investimento); o.dias++;
+  });
+  const locais = Object.values(porLocal).map(o=>{
+    o.cac = o.pastas>0 ? o.custo/o.pastas : 0;
+    o.conv = o.leads>0 ? o.pastas/o.leads*100 : 0;
+    o.receita = o.pastas*num(pr.receitaPorPasta);
+    return o;
+  }).sort((a,b)=>b.pastas-a.pastas);
+  const cacMedioLocais = locais.filter(l=>l.cac>0);
+  const cacMedio = cacMedioLocais.length ? cacMedioLocais.reduce((a,l)=>a+l.cac,0)/cacMedioLocais.length : 0;
+
+  /* prazo */
+  const fim = fases.length? fases[fases.length-1].fim : "";
+  const diasRestantes = fim ? daysBetween(t, fim) : 0;
+  const inicio = pr.dataInicio || BASE_START;
+  const totalDias = fim? Math.max(1, daysBetween(inicio, fim)) : 1;
+  const decorridos = clamp(daysBetween(inicio, t), 0, totalDias);
+  const progressoEsperado = Math.round(decorridos/totalDias*100);
+
+  /* semáforos */
+  const sem = (real, meta, maiorMelhor)=>{
+    if(!meta) return "idle";
+    const r = maiorMelhor ? real/meta : (real>0? meta/real : 0);
+    if(r>=0.95) return "ok"; if(r>=0.8) return "warn"; return "crit";
+  };
+  const semPastas = agg.dias? sem(agg.pastas, metaPastas, true) : "idle";
+  const semCac = agg.pastas>0 ? (cac<=num(pr.cacMax)?"ok": cac<=num(pr.cacMax)*1.2?"warn":"crit") : "idle";
+  const semRoi = invReal>0 ? (roi>=0?"ok": roi>=-25?"warn":"crit") : "idle";
+  const semOrc = orcamento>0 ? (invReal<=orcamento?"ok": invReal<=orcamento*1.1?"warn":"crit") : "idle";
+  const semPrazo = late===0 ? "ok" : late<=2 ? "warn":"crit";
+  const semProg = progresso>=progressoEsperado-5 ? "ok" : progresso>=progressoEsperado-20 ? "warn":"crit";
+
+  const semafaros = [semPastas,semCac,semRoi,semOrc,semPrazo,semProg];
+  let statusGeral = "ok";
+  if(semafaros.includes("crit")) statusGeral = "crit";
+  else if(semafaros.includes("warn")) statusGeral = "warn";
+  if(s.geral.statusManual && s.geral.statusManual!=="auto") statusGeral = s.geral.statusManual;
+
+  /* próximo marco */
+  const marcoProx = (s.marcos.lista||[]).find(m=>m.status!=="concluido");
+
+  return {pr, fases, faseAtual, faseIdx, faseProg, tot, done, late, doing, progresso, progressoEsperado,
+    lateList, nextList, agg, invPrev, invReal, orcamento, metaPastas, metaLeads, metaReceita, metaQualificados, metaTriagens,
+    receita, cac, roi, prodCaptador, convLeadPasta, locais, cacMedio, diasRestantes, fim, inicio, totalDias, decorridos,
+    semPastas, semCac, semRoi, semOrc, semPrazo, semProg, statusGeral, marcoProx, sem};
+}
+
+/* frase "onde estamos" */
+function ondeEstamos(d){
+  const s = S();
+  const partes = [];
+  const nomeFase = "Fase "+d.faseAtual.num+" — "+d.faseAtual.nome.toLowerCase();
+  partes.push("O projeto está na "+nomeFase+", com "+d.progresso+"% das "+d.tot+" tarefas concluídas");
+  const locs = s.territorios.locais||[];
+  if(locs.length){
+    const aptos = locs.filter(l=>localScore(l)>=50).length;
+    partes.push(locs.length+" locais avaliados e "+aptos+" com potencial suficiente para teste");
+  }
+  if(d.agg.dias>0){
+    partes.push(d.agg.dias+" dias de piloto registrados, "+int(d.agg.pastas)+" pastas de uma meta de "+int(d.metaPastas));
+  }
+  if(d.late>0) partes.push(d.late+" tarefa"+(d.late>1?"s":"")+" em atraso");
+  return partes.join("; ")+".";
+}
+
+/* ============================================================
+   MOTOR DE RECOMENDAÇÃO — regras explícitas
+   ============================================================ */
+function motor(){
+  const s = S(), d = D(), pr = d.pr, recs = [];
+  const has = id => (s.acoes.lista||[]).some(a=>a.regra===id) || (s.acoes.recusadas||[]).includes(id);
+  const add = r => { if(!has(r.id)) recs.push(r); };
+
+  if(d.agg.dias>0 && d.metaPastas>0 && d.agg.pastas < d.metaPastas*0.8){
+    const gap = Math.round((1-d.agg.pastas/d.metaPastas)*100);
+    add({id:"R-PRODUCAO", grav:"crit", tema:"Conversão",
+      oque:"Produção "+gap+"% abaixo da meta: "+int(d.agg.pastas)+" pastas contra "+int(d.metaPastas)+" previstas.",
+      porque:"Com "+int(d.agg.leads)+" leads gerados e conversão de "+pct(d.convLeadPasta,1)+" de lead para pasta, o gargalo está mais na conversão do que no volume de abordagem." ,
+      acao:"Acompanhar pessoalmente 2 turnos de cada captador em campo, gravar as objeções mais frequentes e ajustar o script nos pontos onde a conversa morre.",
+      resp:"Diretor de Marketing", prazo:7, ind:"Conversão lead→pasta acima de "+pct(d.convLeadPasta+2,1)+" na semana seguinte",
+      regra:"SE pastas < 80% da meta → investigar conversão em campo antes de aumentar equipe."});
+  }
+  if(d.agg.pastas>0 && d.cac > num(pr.cacMax)){
+    const ac = Math.round((d.cac/num(pr.cacMax)-1)*100);
+    add({id:"R-CAC", grav:d.cac>num(pr.cacMax)*1.2?"crit":"warn", tema:"Investimento",
+      oque:"CAC em "+brl(d.cac)+", "+ac+"% acima do limite de "+brl(pr.cacMax)+".",
+      porque:"O investimento realizado de "+brl(d.invReal)+" produziu "+int(d.agg.pastas)+" pastas. Ou o custo por dia de operação está alto para o volume, ou parte do esforço está em locais de baixo retorno.",
+      acao:"Concentrar a operação nos locais de melhor CAC e suspender os dois piores por 7 dias, mantendo o mesmo custo diário total.",
+      resp:"Diretor de Marketing", prazo:7, ind:"CAC ≤ "+brl(pr.cacMax)+" no ciclo seguinte",
+      regra:"SE CAC > limite → reduzir custo ou mudar o ponto antes de ampliar."});
+  }
+  const piores = d.locais.filter(l=>l.cac>0 && d.cacMedio>0 && l.cac > d.cacMedio*1.25);
+  piores.forEach(l=>{
+    const ac = Math.round((l.cac/d.cacMedio-1)*100);
+    add({id:"R-LOCAL-RUIM-"+l.local, grav:"warn", tema:"Local",
+      oque:"O local "+l.local+" está com CAC "+ac+"% acima da média dos demais ("+brl(l.cac)+" contra "+brl(d.cacMedio)+").",
+      porque:"Em "+l.dias+" dias de operação o local gerou "+int(l.leads)+" leads e "+int(l.pastas)+" pastas, com conversão de "+pct(l.conv,1)+".",
+      acao:"Reduzir a exposição em "+l.local+" e deslocar essas horas para o local de melhor desempenho durante 7 dias.",
+      resp:"Diretor de Marketing", prazo:7, ind:"CAC do ciclo ≤ "+brl(pr.cacMax)+" com o mesmo número de captadores",
+      regra:"SE o CAC de um local > 125% da média → testar redistribuição antes de descartar o local."});
+  });
+  const melhor = d.locais.filter(l=>l.cac>0).sort((a,b)=>a.cac-b.cac)[0];
+  if(melhor && d.cacMedio>0 && melhor.cac < d.cacMedio*0.8){
+    const ab = Math.round((1-melhor.cac/d.cacMedio)*100);
+    add({id:"R-LOCAL-BOM-"+melhor.local, grav:"ok", tema:"Local",
+      oque:"O local "+melhor.local+" apresenta CAC "+ab+"% inferior à média ("+brl(melhor.cac)+").",
+      porque:"Foram "+int(melhor.pastas)+" pastas em "+melhor.dias+" dias, com conversão de "+pct(melhor.conv,1)+" — acima do conjunto.",
+      acao:"Ampliar a exposição em "+melhor.local+": acrescentar um turno por dia durante 5 dias úteis mantendo os demais locais como estão.",
+      resp:"Diretor de Marketing", prazo:5, ind:"Pastas do local sobem sem que o CAC ultrapasse "+brl(pr.cacMax),
+      regra:"SE o CAC de um local < 80% da média → testar aumento de exposição nesse ponto."});
+  }
+  if(d.orcamento>0 && d.invReal > d.orcamento){
+    add({id:"R-ORCAMENTO", grav:"crit", tema:"Investimento",
+      oque:"Investimento realizado de "+brl(d.invReal)+" supera o orçamento de "+brl(d.orcamento)+".",
+      porque:"O desvio acumulado é de "+brl(d.invReal-d.orcamento)+" ("+pct((d.invReal/d.orcamento-1)*100,0)+").",
+      acao:"Revisar linha a linha o orçamento na aba Investimento, congelar as categorias já estouradas e levar o novo valor para aprovação antes de novo desembolso.",
+      resp:"Diretor Financeiro", prazo:5, ind:"Orçamento revisado e aprovado, sem novo desembolso fora dele",
+      regra:"SE investimento > orçamento → revisar orçamento antes de continuar."});
+  }
+  if(d.late>0){
+    add({id:"R-ATRASO", grav:d.late>3?"crit":"warn", tema:"Processo",
+      oque:d.late+" tarefa"+(d.late>1?"s":"")+" com prazo vencido, com o projeto em "+d.progresso+"% contra "+d.progressoEsperado+"% esperados para a data.",
+      porque:"O atraso se concentra "+(d.lateList.length?"na Fase "+d.lateList[0].fase.num+" — "+d.lateList[0].fase.nome:"nas fases iniciais")+".",
+      acao:"Repactuar prazo e responsável de cada tarefa vencida na aba Plano de Ação e definir uma data única de recuperação.",
+      resp:"Diretor de Marketing", prazo:3, ind:"Nenhuma tarefa vencida sem prazo repactuado",
+      regra:"SE existem tarefas vencidas → repactuar prazos antes de avançar de fase."});
+  }
+  if(d.agg.dias>0 && d.prodCaptador>0 && num(pr.metaPastasCaptadorMes)>0){
+    const espera = num(pr.metaPastasCaptadorMes)*(num(pr.duracaoPiloto)/30);
+    if(d.prodCaptador < espera*0.8){
+      add({id:"R-PRODUTIVIDADE", grav:"warn", tema:"Pessoas",
+        oque:"Produtividade de "+d.prodCaptador.toFixed(1)+" pastas por captador contra "+espera.toFixed(1)+" esperadas no período.",
+        porque:"A diferença entre os captadores costuma vir de abordagem, não de local; sem acompanhamento em campo não é possível separar os dois.",
+        acao:"Fazer uma sessão de reciclagem de abordagem com todos os captadores e acompanhar em campo o de menor produtividade por dois turnos.",
+        resp:"Diretor de Marketing", prazo:10, ind:"Produtividade média ≥ "+(espera*0.9).toFixed(1)+" pastas por captador no ciclo seguinte",
+        regra:"SE produtividade < 80% da meta por captador → treinamento e acompanhamento em campo."});
+    }
+  }
+  if(d.agg.pastas>0 && d.cac<=num(pr.cacMax) && d.receita>d.metaReceita*0.95 && d.roi>0){
+    add({id:"R-ESCALA", grav:"ok", tema:"Investimento",
+      oque:"Receita de "+brl(d.receita)+" com CAC de "+brl(d.cac)+", dentro do limite, e ROI de "+pct(d.roi,0)+".",
+      porque:"O modelo se pagou no período medido e a meta de pastas foi praticamente atingida.",
+      acao:"Levar à diretoria a proposta da primeira etapa de escala (de "+num(pr.numCaptadores)+" para "+(num(pr.numCaptadores)+3)+" captadores), com o orçamento simulado na aba Investimento.",
+      resp:"CEO", prazo:10, ind:"Etapa de escala aprovada e CAC mantido ≤ "+brl(pr.cacMax)+" após 30 dias",
+      regra:"SE receita ≥ meta e CAC ≤ limite → propor expansão."});
+  }
+  const pend = (s.compliance.itens||[]).filter(c=>c.status!=="concluido");
+  if(pend.length && d.agg.dias>0){
+    add({id:"R-COMPLIANCE", grav:"crit", tema:"Compliance",
+      oque:pend.length+" validação"+(pend.length>1?"ões":"")+" obrigatória"+(pend.length>1?"s":"")+" ainda em aberto com o piloto já em operação.",
+      porque:"Pendente: "+pend.slice(0,3).map(c=>c.item).join("; ")+(pend.length>3?" e outras":"")+".",
+      acao:"Concluir as validações pendentes na aba O Projeto → Compliance, com responsável e documento anexado para cada uma.",
+      resp:"CEO", prazo:5, ind:"Nenhuma validação obrigatória em aberto",
+      regra:"SE o piloto está rodando com compliance pendente → concluir antes de qualquer expansão."});
+  }
+  const ordem = {crit:0, warn:1, ok:2};
+  recs.sort((a,b)=>ordem[a.grav]-ordem[b.grav]);
+  return recs;
+}
+
+function pontoAtencao(){
+  const r = motor().filter(x=>x.grav!=="ok")[0];
+  if(r) return r.oque;
+  const d = D();
+  if(d.agg.dias===0) return "Nenhum desvio detectado — o piloto ainda não teve dias registrados no diário, então não há resultado para comparar com o plano.";
+  return "Nenhum desvio relevante nos indicadores medidos até aqui.";
+}
+function principalOportunidade(){
+  const r = motor().filter(x=>x.grav==="ok")[0];
+  if(r) return r.oque+" "+r.acao;
+  const d = D();
+  const bons = (S().territorios.locais||[]).filter(l=>localScore(l)>=65);
+  if(bons.length) return bons.length+" local(is) com score alto ainda não testados em campo: "+bons.slice(0,3).map(l=>l.nome).join(", ")+".";
+  return "Ainda não há dados suficientes para apontar uma oportunidade com números.";
+}
+
+/* ============================================================
+   COMPONENTES DE EDIÇÃO
+   ============================================================ */
+function inp(path, o){
+  o = o||{};
+  const v = get(S(), path);
+  const type = o.type || "text";
+  const val = v==null? "" : (o.t==="num"? String(v).replace(".",",") : v);
+  return '<input class="f '+(o.t==="num"?"mono ":"")+(o.cls||"")+'" type="'+type+'" data-b="'+path+'" data-t="'+(o.t||"str")+'" value="'+esc(val)+'" placeholder="'+esc(o.ph||"")+'"'+(o.style?' style="'+o.style+'"':'')+'>';
+}
+function ta(path, o){
+  o=o||{};
+  return '<textarea class="f" data-b="'+path+'" data-t="str" rows="'+(o.rows||3)+'" placeholder="'+esc(o.ph||"")+'">'+esc(get(S(),path)||"")+'</textarea>';
+}
+function sel(path, opts, o){
+  o=o||{};
+  const v = get(S(), path);
+  return '<select class="f '+(o.cls||"")+'" data-b="'+path+'" data-t="str">'+
+    opts.map(op=>{const val=Array.isArray(op)?op[0]:op, lab=Array.isArray(op)?op[1]:op;
+      return '<option value="'+esc(val)+'"'+(String(v)===String(val)?" selected":"")+'>'+esc(lab)+'</option>';}).join("")+'</select>';
+}
+const STATUS_OPTS = [["nao_iniciado","Não iniciado"],["em_andamento","Em andamento"],["concluido","Concluído"],["atencao","Atenção"],["bloqueado","Bloqueado"]];
+function field(label, html){ return '<label class="fl"><span>'+esc(label)+'</span>'+html+'</label>'; }
+function bar(p, cls, target){
+  p = clamp(num(p),0,100);
+  return '<div class="bar '+(cls||"")+'"><i style="width:'+p+'%"></i>'+(target!=null?'<div class="target" style="left:'+clamp(num(target),0,100)+'%"></div>':'')+'</div>';
+}
+function kpi(k,v,s,cls){ return '<div class="kpi '+(cls||"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+v+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>'; }
+function delBtn(list, id){ return '<button class="btn sm ghost danger" data-act="del" data-list="'+list+'" data-id="'+id+'" title="Remover">✕</button>'; }
+
+/* ============================================================
+   NAVEGAÇÃO
+   ============================================================ */
+const SECOES = [
+  {id:"visao",     n:"01", t:"Visão Executiva"},
+  {id:"projeto",   n:"02", t:"O Projeto"},
+  {id:"roadmap",   n:"03", t:"Roadmap"},
+  {id:"plano",     n:"04", t:"Plano de Ação"},
+  {id:"territorios",n:"05",t:"Territórios"},
+  {id:"equipe",    n:"06", t:"Equipe"},
+  {id:"piloto",    n:"07", t:"Piloto"},
+  {id:"investimento",n:"08",t:"Investimento"},
+  {id:"resultados",n:"09", t:"Resultados"},
+  {id:"analise",   n:"10", t:"Análise"},
+  {id:"recomendado",n:"11",t:"Plano Recomendado"},
+  {id:"decisoes",  n:"12", t:"Decisões"},
+  {id:"documentos",n:"13", t:"Documentos"},
+  {id:"relatorio", n:"14", t:"Relatório Executivo"}
+];
+
+const App = {
+  sec:"visao", tab:{}, faseAberta:null, filtro:"todas", booted:false,
+
+  boot(){
+    if(this.booted) return; this.booted = true;
+    this.renderNav();
+    this.render();
+    document.addEventListener("keydown", e=>{
+      if(Present.on){ Present.key(e); }
+    });
+    $("#btn-present").onclick = ()=>Present.open();
+    $("#btn-present-m").onclick = ()=>Present.open();
+    $("#btn-theme").onclick = ()=>{
+      const cur = document.documentElement.getAttribute("data-theme");
+      const next = cur==="dark" ? "light" : cur==="light" ? "" : (matchMedia("(prefers-color-scheme: dark)").matches?"light":"dark");
+      if(next) document.documentElement.setAttribute("data-theme", next); else document.documentElement.removeAttribute("data-theme");
+    };
+  },
+  onRemote(){ if(!this.isTyping()) this.render(); },
+  isTyping(){ const a=document.activeElement; return a && /INPUT|TEXTAREA|SELECT/.test(a.tagName); },
+
+  renderNav(){
+    const nav = $("#nav"); nav.innerHTML = "";
+    SECOES.forEach(s=>{
+      const b = el("button",{class:this.sec===s.id?"on":"", "data-sec":s.id});
+      b.innerHTML = '<span class="n">'+s.n+'</span><span>'+esc(s.t)+'</span>';
+      b.onclick = ()=>this.go(s.id);
+      nav.appendChild(b);
+    });
+    const ms = $("#msel");
+    ms.innerHTML = SECOES.map(s=>'<option value="'+s.id+'"'+(this.sec===s.id?" selected":"")+'>'+s.n+' — '+esc(s.t)+'</option>').join("");
+    ms.onchange = e=>this.go(e.target.value);
+  },
+  go(id){ this.sec = id; this.faseAberta = null; this.renderNav(); this.render(); window.scrollTo(0,0); },
+  setTab(sec, tab){ this.tab[sec]=tab; this.render(); },
+
+  renderTopbar(){
+    const d = D();
+    const st = {ok:["Saudável","ok"],warn:["Atenção","warn"],crit:["Crítico","crit"]}[d.statusGeral]||["Em andamento","run"];
+    $("#topbar").innerHTML =
+      '<div class="tb-strip">'+
+      '<div class="tb-item"><span class="k">Status</span><span class="v">'+semPill(st[1],st[0])+'</span></div>'+
+      '<div class="tb-item"><span class="k">Fase</span><span class="v">'+d.faseAtual.num+' — '+esc(d.faseAtual.nome)+'</span></div>'+
+      '<div class="tb-item"><span class="k">Progresso</span><span class="v">'+d.progresso+'%</span></div>'+
+      '<div class="tb-item"><span class="k">Investido</span><span class="v">'+brl(d.invReal)+'</span></div>'+
+      '<div class="tb-item"><span class="k">Pastas</span><span class="v">'+int(d.agg.pastas)+' / '+int(d.metaPastas)+'</span></div>'+
+      '<div class="tb-item"><span class="k">Atrasadas</span><span class="v">'+(d.late?'<span style="color:var(--crit)">'+d.late+'</span>':'0')+'</span></div>'+
+      '</div>'+
+      '<div class="tb-actions">'+
+      '<span class="salvo" id="salvo"></span>'+
+      '<span class="quem" title="'+esc((Store.user&&Store.user.email)||"")+'">'+esc((Store.membro&&Store.membro.nome)||(Store.user&&Store.user.email)||"")+'</span>'+
+      '<button class="btn sm" data-act="demo">'+(S().geral.demo?"Limpar DEMO":"Carregar DEMO")+'</button>'+
+      '<button class="btn sm ghost" data-act="sair">Sair</button></div>';
+  },
+
+  render(){
+    this.renderTopbar();
+    const v = $("#view");
+    const fn = this["view_"+this.sec];
+    v.innerHTML = (S().geral.demo? '<div class="demo-banner"><span>⚠ Este dossiê está exibindo DADOS DEMONSTRATIVOS. Os números do piloto, do investimento e dos locais são fictícios, para teste.</span><button class="btn sm" data-act="demo">Limpar dados DEMO</button></div>':'')
+      + (fn? fn.call(this) : "<p>Seção não encontrada.</p>");
+    this.bind();
+  },
+
+  bind(){
+    const v = $("#view");
+    v.oninput = e=>{
+      const t = e.target.closest("[data-b]"); if(!t) return;
+      this.write(t); this.renderTopbar();
+    };
+    v.onchange = e=>{
+      const t = e.target.closest("[data-b]");
+      if(t){ this.write(t); if(t.tagName==="SELECT"||t.type==="checkbox"||t.type==="date") this.render(); return; }
+    };
+    v.onclick = e=>{
+      const b = e.target.closest("[data-act]"); if(!b) return;
+      const act = b.getAttribute("data-act");
+      const h = Actions[act]; if(h){ e.preventDefault(); h(b, this); }
+    };
+    $("#topbar").onclick = e=>{
+      const b = e.target.closest("[data-act]"); if(!b) return;
+      const h = Actions[b.getAttribute("data-act")]; if(h) h(b,this);
+    };
+  },
+  write(t){
+    const path = t.getAttribute("data-b"), tp = t.getAttribute("data-t");
+    let val;
+    if(t.type==="checkbox") val = t.checked;
+    else if(tp==="num") val = num(t.value);
+    else val = t.value;
+    setPath(S(), path, val);
+    Store.save(path.split(".")[0]);
+  }
+};
+
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+const TPL = {
+  local:()=>({id:uid("l"), nome:"", cidade:"", regiao:"", tipo:"Hospital", endereco:"", justificativa:"",
+    fluxo:3, hospital:3, perfil:3, seguranca:3, operacional:3, obs:"", status:"nao_iniciado"}),
+  visita:()=>({id:uid("vi"), data:today(), local:"", horario:"", responsavel:"", fluxo:0, abordadas:0, conversas:0, interesses:0, leads:0, obs:""}),
+  pessoa:()=>({id:uid("p"), nome:"", funcao:"Captador", responsabilidade:"", fase:"Fase 6", status:"nao_iniciado", entrada:today(), obs:""}),
+  diario:()=>({id:uid("d"), data:today(), local:"", captadores:num(S().premissas.numCaptadores), leads:0, qualificados:0, triagens:0, pastas:0, investimento:0, obs:""}),
+  invest:()=>({id:uid("v"), categoria:"Outros", item:"", previsto:0, realizado:0, status:"nao_iniciado", obs:""}),
+  decisao:()=>({id:uid("de"), data:today(), decisao:"", responsavel:"", motivo:"", impacto:"", status:"em_andamento"}),
+  risco:()=>({id:uid("r"), risco:"", probabilidade:"media", impacto:"medio", responsavel:"", mitigacao:"", status:"em_andamento"}),
+  doc:()=>({id:uid("do"), nome:"", tipo:"Documento", url:"", responsavel:"", data:today(), obs:""}),
+  acao:()=>({id:uid("a"), tema:"Processo", problema:"", impacto:"medio", acao:"", responsavel:"", prazo:addDays(today(),7), status:"nao_iniciado", indicador:"", regra:"", origem:"manual"}),
+  marco:()=>({id:uid("m"), nome:"", data:"", status:"nao_iniciado"}),
+  compl:()=>({id:uid("c"), item:"", responsavel:"", data:"", status:"nao_iniciado", obs:"", doc:""}),
+  tarefa:()=>({id:uid("t"), titulo:"", responsavel:"", prazo:"", status:"nao_iniciado", obs:"", doc:"", concluidoEm:""})
+};
+
+function listAt(path){ const l = get(S(), path); return Array.isArray(l)? l : []; }
+
+const Actions = {
+  add(b){ const path=b.getAttribute("data-list"), tpl=b.getAttribute("data-tpl");
+    const l = listAt(path); l.push(TPL[tpl]()); setPath(S(),path,l); Store.save(path.split(".")[0],true); App.render(); },
+  del(b){ const path=b.getAttribute("data-list"), id=b.getAttribute("data-id");
+    const l = listAt(path).filter(x=>x.id!==id); setPath(S(),path,l); Store.save(path.split(".")[0],true); App.render(); },
+  tab(b){ App.tab[b.getAttribute("data-sec")] = b.getAttribute("data-tab"); App.render(); window.scrollTo(0,0); },
+  fase(b){ const i=+b.getAttribute("data-i"); App.faseAberta = (App.faseAberta===i? null : i); App.render(); },
+  filtro(b){ App.filtro = b.getAttribute("data-f"); App.render(); },
+  goto(b){ App.go(b.getAttribute("data-to")); },
+  toggle(b){
+    const fi=+b.getAttribute("data-fi"), id=b.getAttribute("data-id");
+    const tk = (S().fases.lista[fi].tarefas||[]).find(x=>x.id===id); if(!tk) return;
+    if(tk.status==="concluido"){ tk.status="em_andamento"; tk.concluidoEm=""; }
+    else { tk.status="concluido"; tk.concluidoEm=today(); }
+    const f = S().fases.lista[fi];
+    const ts = f.tarefas||[];
+    const dn = ts.filter(x=>x.status==="concluido").length;
+    f.status = dn===0? "nao_iniciado" : dn===ts.length? "concluido":"em_andamento";
+    Store.save("fases",true); App.render();
+  },
+  addTarefa(b){ const fi=+b.getAttribute("data-fi");
+    S().fases.lista[fi].tarefas.push(TPL.tarefa()); Store.save("fases",true); App.render(); },
+  delTarefa(b){ const fi=+b.getAttribute("data-fi"), id=b.getAttribute("data-id");
+    const f=S().fases.lista[fi]; f.tarefas = f.tarefas.filter(x=>x.id!==id); Store.save("fases",true); App.render(); },
+  aceitar(b){
+    const id=b.getAttribute("data-id"); const r = motor().find(x=>x.id===id); if(!r) return;
+    S().acoes.lista.push({id:uid("a"), tema:r.tema, problema:r.oque, impacto:r.grav==="crit"?"alto":r.grav==="warn"?"medio":"baixo",
+      acao:r.acao, responsavel:r.resp, prazo:addDays(today(), r.prazo), status:"nao_iniciado", indicador:r.ind, regra:r.id, origem:"motor"});
+    Store.save("acoes",true); toast("Ação incluída na matriz."); App.render();
+  },
+  recusar(b){ const id=b.getAttribute("data-id");
+    if(!S().acoes.recusadas) S().acoes.recusadas=[];
+    S().acoes.recusadas.push(id); Store.save("acoes",true); App.render(); },
+  restaurarRecs(){ S().acoes.recusadas=[]; Store.save("acoes",true); App.render(); },
+  causa(b){ const c=b.getAttribute("data-c"); const g=S().geral;
+    if(!g.causas) g.causas=[];
+    const i=g.causas.indexOf(c); if(i>=0) g.causas.splice(i,1); else g.causas.push(c);
+    Store.save("geral",true); App.render(); },
+  gono(b){ const v=b.getAttribute("data-v"); const g=S().geral;
+    g.goNoGo = Object.assign({}, g.goNoGo, {decisao:v, data:today(), por:g.goNoGo && g.goNoGo.por || "CEO"});
+    Store.save("geral",true); toast("Decisão registrada."); App.render(); },
+  print(){ window.print(); },
+  async baixar(){
+    const md = relatorioMarkdown();
+    const dl = await (window.claude && window.claude.use ? window.claude.use("downloads") : null);
+    if(dl){
+      try{ await dl.save({filename:"dossie-v3prev-captacao-presencial.md", data:md}); toast("Arquivo gerado."); }
+      catch(e){ toast("Download não concluído."); }
+    } else { toast("Download indisponível aqui — use Imprimir / Salvar em PDF."); }
+  },
+  demo(){ if(S().geral.demo) clearDemo(); else loadDemo(); },
+  sair(){ Store.sair(); }
+};
+
+/* ============================================================
+   DADOS DEMO (seção 58 do briefing)
+   ============================================================ */
+const DEMO_LOCAIS = [
+  {nome:"Hospital Regional", cidade:"—", regiao:"Centro", tipo:"Hospital", fluxo:5, hospital:5, perfil:5, seguranca:4, operacional:4, justificativa:"Pronto-socorro de referência para acidentes de trânsito e trabalho."},
+  {nome:"Clínica Reabilitar", cidade:"—", regiao:"Zona Sul", tipo:"Clínica de fisioterapia", fluxo:4, hospital:5, perfil:5, seguranca:5, operacional:5, justificativa:"Pacientes em reabilitação pós-acidente, permanência longa na recepção."},
+  {nome:"Terminal Central", cidade:"—", regiao:"Centro", tipo:"Terminal", fluxo:5, hospital:1, perfil:1, seguranca:2, operacional:2, justificativa:"Fluxo alto, porém público sem relação direta com o benefício."},
+  {nome:"Agência INSS Centro", cidade:"—", regiao:"Centro", tipo:"Agência INSS", fluxo:4, hospital:3, perfil:5, seguranca:4, operacional:3, justificativa:"Público já em processo previdenciário."},
+  {nome:"UPA Norte", cidade:"—", regiao:"Zona Norte", tipo:"Pronto-socorro", fluxo:4, hospital:5, perfil:4, seguranca:3, operacional:4, justificativa:"Grande volume de acidentes de moto na região."}
+];
+const DEMO_DIST = [
+  {local:"Hospital Regional", leads:45, qual:24, tri:15, pastas:11, custo:2100},
+  {local:"Clínica Reabilitar", leads:33, qual:16, tri:9,  pastas:6,  custo:2050},
+  {local:"Terminal Central",  leads:22, qual:10, tri:6,  pastas:3,  custo:1950}
+];
+function spread(total, n){
+  const base = Math.floor(total/n), out = new Array(n).fill(base);
+  let rest = total - base*n, i=0;
+  while(rest>0){ out[i%n]++; rest--; i+=3; }
+  return out;
+}
+function loadDemo(){
+  const s = S(), g = s.geral;
+  g.demoTasks=[]; g.demoMarcos=[]; g.demoInvest=[];
+
+  const SHIFT = Math.max(0, daysBetween(addDays(today(),-2), s.fases.lista[7].inicio));
+  g.demoShift = SHIFT;
+  if(SHIFT>0){
+    s.premissas.dataInicio = addDays(s.premissas.dataInicio, -SHIFT);
+    s.fases.lista.forEach(f=>{
+      f.inicio = addDays(f.inicio,-SHIFT); f.fim = addDays(f.fim,-SHIFT);
+      (f.tarefas||[]).forEach(tk=>{ if(tk.prazo) tk.prazo = addDays(tk.prazo,-SHIFT); });
+    });
+  }
+
+  DEMO_LOCAIS.forEach(l=> s.territorios.locais.push(Object.assign(TPL.local(), l, {_demo:true, status:"concluido", obs:"Registro DEMO"})));
+
+  DEMO_DIST.forEach(dl=>{
+    const dias=10, L=spread(dl.leads,dias), Q=spread(dl.qual,dias), T=spread(dl.tri,dias), P=spread(dl.pastas,dias), C=spread(dl.custo,dias);
+    for(let i=0;i<dias;i++){
+      s.piloto.diario.push(Object.assign(TPL.diario(),{
+        _demo:true, data:addDays(today(), -(29-i*3)), local:dl.local, captadores:2,
+        leads:L[i], qualificados:Q[i], triagens:T[i], pastas:P[i], investimento:C[i], obs:i===0?"Registro DEMO":""
+      }));
+    }
+  });
+  s.piloto.diario.sort((a,b)=> a.data<b.data?-1:1);
+  s.piloto.config.inicio = addDays(today(),-30); s.piloto.config.fim = today();
+
+  [["Equipamentos",1200],["Material",600],["Material",900],["Tecnologia",400]].forEach(()=>{});
+  s.investimento.itens.forEach(it=>{
+    if(["Equipamentos","Material","Tecnologia"].includes(it.categoria) || it.item.indexOf("Treinamento")===0){
+      g.demoInvest.push({id:it.id, prev:it.realizado});
+      it.realizado = it.previsto; it.status="concluido";
+    }
+  });
+
+  s.fases.lista.forEach((f,i)=>{
+    if(i<=7){
+      (f.tarefas||[]).forEach((tk,ti)=>{
+        const concluir = i<7 || ti<3;
+        if(concluir && tk.status!=="concluido"){ tk.status="concluido"; tk.concluidoEm=addDays(today(),-20+i); g.demoTasks.push(tk.id); }
+      });
+      const ts=f.tarefas||[], dn=ts.filter(x=>x.status==="concluido").length;
+      f.status = dn===ts.length?"concluido":dn?"em_andamento":"nao_iniciado";
+    }
+  });
+  s.marcos.lista.forEach((m,i)=>{ if(i<=6 && m.status!=="concluido"){ m.status="concluido"; m.data=addDays(today(),-25+i*3); g.demoMarcos.push(m.id); } else if(i>6 && !m.data){ m.data=addDays(today(), (i-6)*7); g.demoMarcos.push(m.id); } });
+  s.compliance.itens.forEach((c,i)=>{ if(i<6 && c.status!=="concluido"){ c.status="concluido"; c.responsavel="Jurídico"; c.data=addDays(today(),-32); c._demoDone=true; } });
+  s.decisoes.lista.push(Object.assign(TPL.decisao(),{_demo:true, data:addDays(today(),-31), decisao:"Aprovado piloto de 30 dias com 2 captadores em 3 locais", responsavel:"CEO", motivo:"Score territorial e pesquisa de campo indicaram potencial em 3 pontos", impacto:"Liberação de R$ 14.000 de orçamento", status:"concluido"}));
+  s.decisoes.lista.push(Object.assign(TPL.decisao(),{_demo:true, data:addDays(today(),-12), decisao:"Reduzida a operação no Terminal Central de 5 para 2 dias por semana", responsavel:"Diretor de Marketing", motivo:"CAC do ponto muito acima da média nas duas primeiras semanas", impacto:"Horas realocadas para o Hospital Regional", status:"concluido"}));
+  s.pesquisa.visitas.push(Object.assign(TPL.visita(),{_demo:true, data:addDays(today(),-40), local:"Hospital Regional", horario:"14h–18h", responsavel:"Diretor de Marketing", fluxo:210, abordadas:38, conversas:19, interesses:11, leads:7, obs:"Recepção do ambulatório concentra o público-alvo à tarde."}));
+  s.pesquisa.visitas.push(Object.assign(TPL.visita(),{_demo:true, data:addDays(today(),-39), local:"Clínica Reabilitar", horario:"9h–12h", responsavel:"Diretor de Marketing", fluxo:90, abordadas:22, conversas:15, interesses:9, leads:6, obs:"Público muito qualificado, volume menor."}));
+  s.pesquisa.visitas.push(Object.assign(TPL.visita(),{_demo:true, data:addDays(today(),-38), local:"Terminal Central", horario:"17h–20h", responsavel:"Diretor de Marketing", fluxo:640, abordadas:52, conversas:14, interesses:4, leads:2, obs:"Fluxo altíssimo, aderência baixa."}));
+
+  g.demo = true;
+  Store.saveAll(); App.render(); toast("Dados DEMO carregados — confira os cálculos e depois limpe.");
+}
+function clearDemo(){
+  const s = S(), g = s.geral;
+  const strip = arr => arr.filter(x=>!x._demo);
+  s.territorios.locais = strip(s.territorios.locais);
+  s.piloto.diario = strip(s.piloto.diario);
+  s.decisoes.lista = strip(s.decisoes.lista);
+  s.pesquisa.visitas = strip(s.pesquisa.visitas);
+  s.piloto.config.inicio=""; s.piloto.config.fim="";
+  (g.demoInvest||[]).forEach(r=>{ const it=s.investimento.itens.find(x=>x.id===r.id); if(it){ it.realizado=r.prev; it.status="nao_iniciado"; }});
+  const tset = new Set(g.demoTasks||[]);
+  s.fases.lista.forEach(f=>{ (f.tarefas||[]).forEach(tk=>{ if(tset.has(tk.id)){ tk.status="nao_iniciado"; tk.concluidoEm=""; }});
+    const ts=f.tarefas||[], dn=ts.filter(x=>x.status==="concluido").length;
+    f.status = dn===0?"nao_iniciado": dn===ts.length?"concluido":"em_andamento"; });
+  const mset = new Set(g.demoMarcos||[]);
+  s.marcos.lista.forEach(m=>{ if(mset.has(m.id)){ m.status="nao_iniciado"; m.data=""; }});
+  const SH = num(g.demoShift);
+  if(SH>0){
+    s.premissas.dataInicio = addDays(s.premissas.dataInicio, SH);
+    s.fases.lista.forEach(f=>{ f.inicio=addDays(f.inicio,SH); f.fim=addDays(f.fim,SH);
+      (f.tarefas||[]).forEach(tk=>{ if(tk.prazo) tk.prazo=addDays(tk.prazo,SH); }); });
+    g.demoShift = 0;
+  }
+  s.compliance.itens.forEach(c=>{ if(c._demoDone){ c.status="nao_iniciado"; c.responsavel=""; c.data=""; delete c._demoDone; }});
+  s.acoes.lista = s.acoes.lista.filter(a=>a.origem!=="motor");
+  s.acoes.recusadas = [];
+  g.demo=false; g.demoTasks=[]; g.demoMarcos=[]; g.demoInvest=[]; g.causas=[];
+  Store.save("premissas",true);
+  Store.saveAll(); App.render(); toast("Dados DEMO removidos.");
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+function head(eyebrow, title, lede){
+  return '<div class="page-head"><div class="eyebrow">'+esc(eyebrow)+'</div><h1>'+esc(title)+'</h1>'+(lede?'<p class="lede">'+esc(lede)+'</p>':'')+'</div>';
+}
+function tabsHtml(sec, list, cur){
+  return '<div class="tabs">'+list.map(t=>'<button data-act="tab" data-sec="'+sec+'" data-tab="'+t[0]+'" class="'+(cur===t[0]?"on":"")+'">'+esc(t[1])+'</button>').join("")+'</div>';
+}
+const T = (sec, def)=> App.tab[sec] || def;
+
+/* ---------------- 01 VISÃO EXECUTIVA ---------------- */
+App.view_visao = function(){
+  const s = S(), d = D();
+  const st = {ok:["Saudável","ok"],warn:["Atenção","warn"],crit:["Crítico","crit"]}[d.statusGeral]||["Em andamento","run"];
+  const prox = d.nextList.slice(0).sort((a,b)=>{
+    if(a.fi!==b.fi) return a.fi-b.fi;
+    return (a.t.prazo||"9999")<(b.t.prazo||"9999")?-1:1;
+  }).slice(0,5);
+
+  let h = '<div class="cover">'+
+    '<div class="cover-top">'+
+      '<div class="co-brand">V3 Prev · Projeto estratégico</div>'+
+      '<h1>Captação Presencial de Clientes</h1>'+
+      '<p class="co-sub">Plano estratégico de implantação, validação e escala do canal presencial de aquisição para <strong>auxílio-acidente</strong>.</p>'+
+    '</div>'+
+    '<div class="cover-strip">'+
+      kpi("Status", semPill(st[1],st[0]))+
+      kpi("Fase atual", "<span style=\"font-size:15px\">"+d.faseAtual.num+" — "+esc(d.faseAtual.nome)+"</span>")+
+      kpi("Progresso", d.progresso+"%", d.done+" de "+d.tot+" tarefas")+
+      kpi("Investimento", brl(d.invReal), "de "+brl(d.orcamento)+" previstos")+
+      kpi("Resultado", brl(d.receita), int(d.agg.pastas)+" pastas")+
+      kpi("Próximo marco", d.marcoProx? '<span style="font-size:15px">'+esc(d.marcoProx.nome)+'</span>' : "—", d.marcoProx&&d.marcoProx.data? fmtDate(d.marcoProx.data): "sem data definida")+
+    '</div>'+
+    '<div class="where"><div class="lbl">Onde estamos</div><p>'+esc(ondeEstamos(d))+'</p></div>'+
+  '</div>';
+
+  h += '<section class="blk" style="margin-top:26px"><div class="blk-h"><h2>Leitura do CEO em 2 minutos</h2><span class="hint">Responsável pelo projeto: '+esc(s.geral.responsavel||"—")+'</span></div>'+
+    '<div class="kpis g4">'+
+      kpi("Tarefas", d.done+" / "+d.tot, bar(d.progresso, d.semProg, d.progressoEsperado)+'<span class="tiny dim">'+(d.decorridos<=0? 'o projeto começa em '+fmtDate(d.inicio) : 'marca preta = esperado para hoje ('+d.progressoEsperado+'%)')+'</span>')+
+      kpi("Prazo", (d.diasRestantes>=0? d.diasRestantes+" dias":Math.abs(d.diasRestantes)+" dias além"), "término previsto "+fmtDate(d.fim), d.diasRestantes<0?"crit":"")+
+      kpi("Pastas", int(d.agg.pastas)+" / "+int(d.metaPastas), bar(safeDiv(d.agg.pastas,d.metaPastas)*100, d.semPastas), d.semPastas==="idle"?"":d.semPastas)+
+      kpi("CAC", d.agg.pastas? brl(d.cac):"—", "limite "+brl(d.pr.cacMax), d.semCac==="idle"?"":d.semCac)+
+      kpi("Receita", brl(d.receita), "meta "+brl(d.metaReceita))+
+      kpi("ROI", d.invReal? pct(d.roi,0):"—", "sobre "+brl(d.invReal)+" investidos", d.semRoi==="idle"?"":d.semRoi)+
+      kpi("Orçamento", pct(safeDiv(d.invReal,d.orcamento)*100,0)+" usado", brl(d.orcamento-d.invReal)+" disponíveis", d.semOrc==="idle"?"":d.semOrc)+
+      kpi("Atrasadas", String(d.late), d.late? "clique em Plano de Ação":"nenhuma tarefa vencida", d.late?"crit":"ok")+
+    '</div></section>';
+
+  h += '<div class="grid g2" style="margin-bottom:28px">'+
+    '<div class="insight att"><h3>Principal ponto de atenção</h3><p>'+esc(pontoAtencao())+'</p></div>'+
+    '<div class="insight opp"><h3>Principal oportunidade</h3><p>'+esc(principalOportunidade())+'</p></div>'+
+  '</div>';
+
+  h += '<div class="grid g2">'+
+    '<section class="card"><div class="blk-h"><h2>O que preciso fazer agora</h2><button class="btn sm ghost" data-act="goto" data-to="plano">Ver todas</button></div>'+
+      (prox.length? '<ul class="next">'+prox.map(x=>'<li><div><div class="ttl">'+esc(x.t.titulo||"(tarefa sem título)")+'</div><div class="sub">Fase '+x.fase.num+' — '+esc(x.fase.nome)+' · '+esc(x.t.responsavel||"sem responsável")+' · '+(x.t.prazo?fmtDate(x.t.prazo):"sem prazo")+'</div></div></li>').join("")+'</ul>'
+        : '<div class="empty">Todas as tarefas do plano estão concluídas.</div>')+
+    '</section>'+
+    '<section class="card"><div class="blk-h"><h2>O que está atrasado</h2>'+(d.late?'<span class="pill crit"><i class="dot"></i>'+d.late+' vencida'+(d.late>1?"s":"")+'</span>':'<span class="pill ok"><i class="dot"></i>em dia</span>')+'</div>'+
+      (d.late? '<ul class="next">'+d.lateList.slice(0,6).map(x=>'<li><div><div class="ttl">'+esc(x.t.titulo)+'</div><div class="sub" style="color:var(--crit)">venceu em '+fmtDate(x.t.prazo)+' · Fase '+x.fase.num+' · '+esc(x.t.responsavel||"sem responsável")+'</div></div></li>').join("")+'</ul>'+
+        (d.late>6?'<p class="tiny dim" style="margin-top:8px">e mais '+(d.late-6)+'.</p>':'')
+        : '<div class="empty">Nenhuma tarefa com prazo vencido.</div>')+
+    '</section>'+
+  '</div>';
+  return h;
+};
+
+/* ---------------- 02 O PROJETO ---------------- */
+App.view_projeto = function(){
+  const s=S(), g=s.geral, tab=T("projeto","dossie");
+  let h = head("02 · Dossiê","O Projeto","Por que a V3 Prev está criando este canal, o que precisa ser comprovado e sob quais regras.");
+  h += tabsHtml("projeto",[["dossie","Dossiê"],["teoria","Teoria do projeto"],["premissas","Premissas"],["compliance","Compliance"]],tab);
+
+  if(tab==="dossie"){
+    const campos = [
+      ["Contexto","geral.contexto","Por que a V3 está criando esse canal."],
+      ["Oportunidade","geral.oportunidade","Qual problema ou oportunidade estamos tentando capturar."],
+      ["Público-alvo","geral.publico","Quem pretendemos alcançar."],
+      ["Hipótese","geral.hipotese","Por que acreditamos que a captação presencial pode funcionar."],
+      ["Modelo","geral.modelo","Como o canal será estruturado."],
+      ["Objetivo","geral.objetivo","O que precisa ser comprovado."],
+      ["Critério de sucesso","geral.criterioSucesso","Como saberemos se funcionou."],
+      ["Critério de escala","geral.criterioEscala","Quando será permitido aumentar o investimento."]
+    ];
+    h += '<div class="grid g2">'+campos.map(c=>'<section class="card"><div class="blk-h"><h2>'+esc(c[0])+'</h2></div><p class="tiny dim" style="margin-bottom:8px">'+esc(c[2])+'</p>'+ta(c[1],{rows:5})+'</section>').join("")+'</div>';
+  }
+
+  if(tab==="teoria"){
+    const steps=[
+      ["Hipótese","Encontrar pessoas potencialmente elegíveis onde elas já estão.",0],
+      ["Abordagem","Comunicação presencial adequada, com script validado.",0],
+      ["Interesse","A pessoa demonstra interesse e autoriza o contato.",0],
+      ["Cadastro","O lead entra no CRM existente, na origem “Captação Presencial”.",1],
+      ["Qualificação","Equipe V3 executa o processo comercial que já existe.",1],
+      ["Documentação","Processo normal da V3, sem alteração.",1],
+      ["Pasta","Resultado operacional.",1],
+      ["Receita","Resultado financeiro.",1]
+    ];
+    h += '<section class="blk"><div class="blk-h"><h2>Do encontro na rua à receita</h2><span class="hint">As etapas tracejadas já acontecem nos sistemas atuais da V3 — este dossiê apenas lê o resultado consolidado delas.</span></div>'+
+      '<div class="theory">'+steps.map((st,i)=>
+        (i?'<div class="arrow">↓</div>':'')+
+        '<div class="step'+(st[2]?" ext":"")+'"><div class="st">'+esc(st[0])+'</div><div class="sd">'+esc(st[1])+'</div></div>').join("")+
+      '</div></section>'+
+      '<section class="card"><div class="blk-h"><h2>Princípio de não duplicação</h2></div>'+
+      '<p class="muted">Este dossiê <strong>não</strong> guarda cadastro de leads, atendimento, pipeline individual, discadora, WhatsApp ou automação comercial. Isso é dos sistemas que a V3 já opera. Aqui ficam apenas: premissas, cronograma, projeto, indicadores consolidados, análise e decisão.</p></section>';
+  }
+
+  if(tab==="premissas"){
+    const P=[
+      ["Data de início do projeto","premissas.dataInicio","date"],
+      ["Receita por pasta (R$)","premissas.receitaPorPasta","num"],
+      ["Custo por captador / mês (R$)","premissas.custoCaptadorMes","num"],
+      ["Meta de pastas por captador / mês","premissas.metaPastasCaptadorMes","num"],
+      ["Meta de leads por captador / mês","premissas.metaLeadsCaptadorMes","num"],
+      ["CAC máximo aceitável (R$)","premissas.cacMax","num"],
+      ["Orçamento do piloto (R$)","premissas.orcamento","num"],
+      ["Número de captadores","premissas.numCaptadores","num"],
+      ["Número de locais","premissas.numLocais","num"],
+      ["Duração do piloto (dias)","premissas.duracaoPiloto","num"],
+      ["Conversão lead → qualificado (%)","premissas.convLeadQualificado","num"],
+      ["Conversão qualificado → triagem (%)","premissas.convQualificadoTriagem","num"],
+      ["Conversão triagem → pasta (%)","premissas.convTriagemPasta","num"]
+    ];
+    const d=D();
+    h += '<section class="blk"><div class="blk-h"><h2>Premissas do projeto</h2><span class="hint">Toda alteração aqui recalcula metas, CAC, ROI, cenários e recomendações.</span></div>'+
+      '<div class="card"><div class="grid g3">'+P.map(p=>field(p[0], inp(p[1],{t:p[2]==="num"?"num":"str", type:p[2]==="date"?"date":"text"}))).join("")+'</div></div></section>'+
+      '<section class="blk"><div class="blk-h"><h2>O que estas premissas produzem</h2></div><div class="kpis g4">'+
+        kpi("Meta de pastas no piloto", int(d.metaPastas), num(d.pr.numCaptadores)+" captadores × "+num(d.pr.metaPastasCaptadorMes)+" × "+(num(d.pr.duracaoPiloto)/30).toFixed(2)+" mês")+
+        kpi("Meta de leads", int(d.metaLeads))+
+        kpi("Receita esperada", brl(d.metaReceita))+
+        kpi("CAC no limite", brl(d.pr.cacMax), "orçamento ÷ meta = "+brl(safeDiv(d.orcamento,d.metaPastas)))+
+      '</div></section>';
+  }
+
+  if(tab==="compliance"){
+    h += '<section class="blk"><div class="blk-h"><h2>Validações obrigatórias antes do piloto</h2><button class="btn sm" data-act="add" data-list="compliance.itens" data-tpl="compl">+ Validação</button></div>'+
+    '<div class="tw"><table><thead><tr><th>Validação</th><th>Responsável</th><th>Data</th><th>Status</th><th>Documento</th><th>Observação</th><th></th></tr></thead><tbody>'+
+    s.compliance.itens.map((c,i)=>'<tr><td style="min-width:230px">'+inp("compliance.itens."+i+".item")+'</td>'+
+      '<td>'+inp("compliance.itens."+i+".responsavel",{ph:"quem valida"})+'</td>'+
+      '<td>'+inp("compliance.itens."+i+".data",{type:"date"})+'</td>'+
+      '<td>'+sel("compliance.itens."+i+".status",STATUS_OPTS)+'</td>'+
+      '<td>'+inp("compliance.itens."+i+".doc",{ph:"link ou nome"})+'</td>'+
+      '<td>'+inp("compliance.itens."+i+".obs")+'</td>'+
+      '<td>'+delBtn("compliance.itens",c.id)+'</td></tr>').join("")+
+    '</tbody></table></div>'+
+    '<p class="tiny dim" style="margin-top:10px">Enquanto houver validação em aberto com o piloto rodando, o motor de recomendação trata isso como desvio crítico.</p></section>';
+  }
+  return h;
+};
+
+/* ---------------- 03 ROADMAP ---------------- */
+App.view_roadmap = function(){
+  const s=S(), d=D(), tab=T("roadmap","fases");
+  let h = head("03 · Caminho","Roadmap","Onze fases entre a tese e a escala. Cada fase tem objetivo, entregável, responsável, prazo e critério de conclusão.");
+  h += tabsHtml("roadmap",[["fases","Fases"],["cronograma","Cronograma"],["marcos","Marcos"]],tab);
+
+  if(tab==="fases"){
+    h += '<div class="phases">';
+    s.fases.lista.forEach((f,i)=>{
+      const p = d.faseProg(f);
+      const cls = f.status==="concluido"?"ok": f.status==="em_andamento"?"":"idle";
+      h += '<button class="ph'+(App.faseAberta===i?" on":"")+'" data-act="fase" data-i="'+i+'">'+
+        '<div><div class="idx">FASE '+f.num+'</div></div>'+
+        '<div><div class="nm">'+esc(f.nome)+'</div><div class="pr">'+bar(p,cls)+'<span class="pc">'+p+'%</span><span class="pc">'+fmtDateShort(f.inicio)+' → '+fmtDateShort(f.fim)+'</span></div></div>'+
+        '<div>'+statusPill(f.status)+'</div></button>';
+    });
+    h += '</div>';
+    if(App.faseAberta!=null){
+      const i = App.faseAberta, f = s.fases.lista[i], b="fases.lista."+i;
+      h += '<div class="ph-detail">'+
+        '<div class="blk-h"><h2>Fase '+f.num+' — '+esc(f.nome)+'</h2>'+statusPill(f.status)+'</div>'+
+        '<div class="grid g2" style="margin-bottom:16px">'+
+          field("Objetivo", ta(b+".objetivo",{rows:3}))+
+          field("Entregável", ta(b+".entregavel",{rows:3}))+
+        '</div>'+
+        '<div class="grid g4" style="margin-bottom:16px">'+
+          field("Responsável", inp(b+".responsavel"))+
+          field("Início", inp(b+".inicio",{type:"date"}))+
+          field("Término", inp(b+".fim",{type:"date"}))+
+          field("Investimento previsto (R$)", inp(b+".investimento",{t:"num"}))+
+        '</div>'+
+        '<div class="grid g2" style="margin-bottom:16px">'+
+          field("Critério de conclusão", ta(b+".criterio",{rows:2}))+
+          field("Status da fase", sel(b+".status",STATUS_OPTS))+
+        '</div>'+
+        '<div class="blk-h"><h2 style="font-size:13px">O que precisa ser feito</h2><button class="btn sm" data-act="addTarefa" data-fi="'+i+'">+ Tarefa</button></div>'+
+        (f.tarefas||[]).map((tk,ti)=>{
+          const tb = b+".tarefas."+ti, done = tk.status==="concluido";
+          return '<div class="chk'+(done?" done":"")+'">'+
+            '<input type="checkbox" '+(done?"checked":"")+' data-act="toggle" data-fi="'+i+'" data-id="'+tk.id+'">'+
+            '<div class="t"><div class="ti">'+inp(tb+".titulo",{ph:"descreva a tarefa"})+'</div>'+
+            '<div class="meta">'+inp(tb+".responsavel",{ph:"responsável"})+inp(tb+".prazo",{type:"date"})+sel(tb+".status",STATUS_OPTS)+inp(tb+".obs",{ph:"observação"})+inp(tb+".doc",{ph:"documento"})+
+            (tk.concluidoEm?'<span class="tag">✓ '+fmtDate(tk.concluidoEm)+'</span>':'')+'</div></div>'+
+            '<button class="btn sm ghost danger" data-act="delTarefa" data-fi="'+i+'" data-id="'+tk.id+'">✕</button></div>';
+        }).join("")+
+        '<div class="grid g2" style="margin-top:16px">'+
+          field("Resultado obtido na fase", ta(b+".resultado",{rows:3, ph:"o que de fato aconteceu"}))+
+          field("Observações", ta(b+".obs",{rows:3}))+
+        '</div>'+
+      '</div>';
+    }
+  }
+
+  if(tab==="cronograma"){
+    const fs = s.fases.lista;
+    const ini = fs.reduce((a,f)=> !a||f.inicio<a ? f.inicio:a, "");
+    const fim = fs.reduce((a,f)=> !a||f.fim>a ? f.fim:a, "");
+    const span = Math.max(1, daysBetween(ini,fim));
+    const posToday = clamp(daysBetween(ini,today())/span*100,0,100);
+    h += '<section class="blk"><div class="blk-h"><h2>Cronograma master</h2><span class="hint">'+fmtDate(ini)+' → '+fmtDate(fim)+' · '+span+' dias · linha vermelha = hoje</span></div>'+
+      '<div class="gantt"><table><thead><tr><th>Fase</th><th>Início</th><th>Fim</th><th>Responsável</th><th style="min-width:240px">Linha do tempo</th><th class="num">%</th></tr></thead><tbody>'+
+      fs.map((f,i)=>{
+        const p = D().faseProg(f);
+        const l = clamp(daysBetween(ini,f.inicio)/span*100,0,100);
+        const w = clamp(Math.max(1.5, daysBetween(f.inicio,f.fim)/span*100),0,100-l);
+        const cls = f.status==="concluido"?"ok": f.status==="em_andamento"?"": (f.fim<today()?"crit":"idle");
+        return '<tr><td><strong>'+f.num+'</strong> '+esc(f.nome)+'</td>'+
+          '<td>'+inp("fases.lista."+i+".inicio",{type:"date"})+'</td>'+
+          '<td>'+inp("fases.lista."+i+".fim",{type:"date"})+'</td>'+
+          '<td>'+inp("fases.lista."+i+".responsavel")+'</td>'+
+          '<td><div class="gtrack"><i class="'+cls+'" style="left:'+l+'%;width:'+w+'%"></i><div class="gtoday" style="left:'+posToday+'%"></div></div></td>'+
+          '<td class="num">'+p+'%</td></tr>';
+      }).join("")+
+      '</tbody></table></div>'+
+      '<div class="kpis g4" style="margin-top:16px">'+
+        kpi("Progresso geral", D().progresso+"%", bar(D().progresso, D().semProg, D().progressoEsperado))+
+        kpi("Esperado para hoje", D().progressoEsperado+"%", D().decorridos+" de "+D().totalDias+" dias decorridos")+
+        kpi("Dias restantes", String(D().diasRestantes))+
+        kpi("Tarefas vencidas", String(D().late), D().late?"repactuar prazos":"em dia", D().late?"crit":"ok")+
+      '</div></section>';
+  }
+
+  if(tab==="marcos"){
+    h += '<section class="blk"><div class="blk-h"><h2>Marcos do projeto</h2><button class="btn sm" data-act="add" data-list="marcos.lista" data-tpl="marco">+ Marco</button></div>'+
+      '<div class="card"><div class="ms">'+
+      s.marcos.lista.map((m,i)=>{
+        const done = m.status==="concluido";
+        const isNow = !done && s.marcos.lista.findIndex(x=>x.status!=="concluido")===i;
+        return '<div class="m'+(done?" done":isNow?" now":"")+'"><div class="node"></div>'+
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">'+inp("marcos.lista."+i+".nome",{style:"max-width:320px"})+inp("marcos.lista."+i+".data",{type:"date",style:"max-width:150px"})+'</div>'+
+          '<div style="display:flex;gap:6px;align-items:center">'+sel("marcos.lista."+i+".status",STATUS_OPTS,{cls:"",})+delBtn("marcos.lista",m.id)+'</div></div>';
+      }).join("")+
+      '</div></div></section>';
+  }
+  return h;
+};
+
+/* ---------------- 04 PLANO DE AÇÃO (checklist master) ---------------- */
+App.view_plano = function(){
+  const s=S(), d=D(), f=App.filtro;
+  const t = today();
+  let itens = [];
+  s.fases.lista.forEach((fa,fi)=> (fa.tarefas||[]).forEach((tk,ti)=> itens.push({fa,fi,tk,ti})));
+  const filtros = [["todas","Todas"],["pendentes","Pendentes"],["andamento","Em andamento"],["concluidas","Concluídas"],["atrasadas","Atrasadas"],["proximas","Próximos 14 dias"]];
+  const match = x => {
+    if(f==="pendentes") return x.tk.status!=="concluido";
+    if(f==="andamento") return x.tk.status==="em_andamento";
+    if(f==="concluidas") return x.tk.status==="concluido";
+    if(f==="atrasadas") return x.tk.status!=="concluido" && x.tk.prazo && x.tk.prazo<t;
+    if(f==="proximas") return x.tk.status!=="concluido" && x.tk.prazo && x.tk.prazo>=t && daysBetween(t,x.tk.prazo)<=14;
+    return true;
+  };
+  const vis = itens.filter(match);
+  const resp = {};
+  itens.forEach(x=>{ const r=(x.tk.responsavel||"Sem responsável"); if(!resp[r]) resp[r]={t:0,d:0,a:0}; resp[r].t++; if(x.tk.status==="concluido") resp[r].d++; else if(x.tk.prazo&&x.tk.prazo<t) resp[r].a++; });
+
+  let h = head("04 · Execução","Tudo que precisa ser feito","Todas as tarefas das 11 fases em uma lista só. Marque o que foi concluído — a data é registrada automaticamente.");
+  h += '<div class="kpis g4" style="margin-bottom:18px">'+
+    kpi("Total", String(d.tot))+kpi("Concluídas", String(d.done), bar(d.progresso,"ok"))+
+    kpi("Em andamento", String(d.doing))+kpi("Atrasadas", String(d.late), d.late?"prazo vencido":"nenhuma", d.late?"crit":"ok")+'</div>';
+  h += '<div class="tabs">'+filtros.map(x=>'<button data-act="filtro" data-f="'+x[0]+'" class="'+(f===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div>';
+
+  if(!vis.length) h += '<div class="empty">Nenhuma tarefa neste filtro.</div>';
+  else {
+    let lastF = -1;
+    h += vis.map(x=>{
+      let pre = "";
+      if(x.fi!==lastF){ lastF=x.fi; pre = '<div class="lbl" style="margin:16px 0 8px">Fase '+x.fa.num+' — '+esc(x.fa.nome)+'</div>'; }
+      const tb = "fases.lista."+x.fi+".tarefas."+x.ti, done = x.tk.status==="concluido";
+      const late = !done && x.tk.prazo && x.tk.prazo<t;
+      return pre+'<div class="chk'+(done?" done":"")+'"'+(late?' style="border-color:color-mix(in srgb,var(--crit) 40%,transparent)"':'')+'>'+
+        '<input type="checkbox" '+(done?"checked":"")+' data-act="toggle" data-fi="'+x.fi+'" data-id="'+x.tk.id+'">'+
+        '<div class="t"><div class="ti">'+inp(tb+".titulo")+'</div>'+
+        '<div class="meta">'+inp(tb+".responsavel",{ph:"responsável"})+inp(tb+".prazo",{type:"date"})+sel(tb+".status",STATUS_OPTS)+inp(tb+".obs",{ph:"observação"})+
+        (late?'<span class="pill crit"><i class="dot"></i>vencida</span>':'')+(x.tk.concluidoEm?'<span class="tag">✓ '+fmtDate(x.tk.concluidoEm)+'</span>':'')+'</div></div>'+
+        '<button class="btn sm ghost danger" data-act="delTarefa" data-fi="'+x.fi+'" data-id="'+x.tk.id+'">✕</button></div>';
+    }).join("");
+  }
+
+  h += '<section class="blk" style="margin-top:28px"><div class="blk-h"><h2>Por responsável</h2></div><div class="tw"><table><thead><tr><th>Responsável</th><th class="num">Tarefas</th><th class="num">Concluídas</th><th class="num">Atrasadas</th><th style="min-width:160px">Avanço</th></tr></thead><tbody>'+
+    Object.keys(resp).sort().map(r=>{const o=resp[r];const p=Math.round(o.d/o.t*100);
+      return '<tr><td>'+esc(r)+'</td><td class="num">'+o.t+'</td><td class="num">'+o.d+'</td><td class="num"'+(o.a?' style="color:var(--crit)"':'')+'>'+o.a+'</td><td>'+bar(p,p===100?"ok":"")+'</td></tr>';}).join("")+
+    '</tbody></table></div></section>';
+  return h;
+};
+
+/* ---------------- 05 TERRITÓRIOS ---------------- */
+const TIPO_LOCAL = ["Hospital","Pronto-socorro","Clínica de fisioterapia","Clínica de reabilitação","Agência INSS","Perícia médica","Terminal","Sindicato","Outro"];
+App.view_territorios = function(){
+  const s=S(), tab=T("territorios","locais");
+  let h = head("05 · Inteligência territorial","Territórios","Descobrir onde vale a pena testar antes de colocar gente na rua. O score é calculado a partir dos cinco critérios avaliados.");
+  h += tabsHtml("territorios",[["locais","Locais candidatos"],["pesquisa","Pesquisa de campo"],["ranking","Ranking"]],tab);
+
+  const locais = s.territorios.locais;
+  if(tab==="locais"){
+    h += '<section class="blk"><div class="blk-h"><h2>Locais avaliados</h2><button class="btn sm primary" data-act="add" data-list="territorios.locais" data-tpl="local">+ Local</button></div>';
+    if(!locais.length) h += '<div class="empty">Nenhum local cadastrado ainda. Comece pelos hospitais, prontos-socorros, clínicas de fisioterapia e agências do INSS da praça.</div>';
+    else {
+      h += '<div class="tw"><table><thead><tr><th>Local</th><th>Cidade / Região</th><th>Tipo</th><th class="num" title="1 a 5">Fluxo</th><th class="num" title="1 a 5">Prox. hospitalar</th><th class="num" title="1 a 5">Perfil</th><th class="num" title="1 a 5">Segurança</th><th class="num" title="1 a 5">Operacional</th><th class="num">Score</th><th>Classificação</th><th></th></tr></thead><tbody>'+
+      locais.map((l,i)=>{const b="territorios.locais."+i, sc=localScore(l), cl=localClass(sc);
+        return '<tr><td style="min-width:170px">'+inp(b+".nome",{ph:"nome do local"})+'</td>'+
+        '<td style="min-width:150px">'+inp(b+".regiao",{ph:"região"})+'</td>'+
+        '<td>'+sel(b+".tipo",TIPO_LOCAL)+'</td>'+
+        ["fluxo","hospital","perfil","seguranca","operacional"].map(k=>'<td class="num" style="width:64px">'+inp(b+"."+k,{t:"num",type:"number"})+'</td>').join("")+
+        '<td class="num"><span class="score">'+sc+'</span></td><td>'+semPill(cl.c,cl.l)+'</td><td>'+delBtn("territorios.locais",l.id)+'</td></tr>'+
+        '<tr><td colspan="11" style="padding-top:0;border-bottom:2px solid var(--line)"><div class="grid g3">'+
+          field("Endereço", inp(b+".endereco"))+field("Justificativa", inp(b+".justificativa",{ph:"por que este ponto"}))+field("Observações", inp(b+".obs"))+
+        '</div></td></tr>';}).join("")+
+      '</tbody></table></div>'+
+      '<p class="tiny dim" style="margin-top:10px">Score = fluxo (30%) + proximidade hospitalar (20%) + perfil do público (25%) + segurança (10%) + facilidade operacional (15%), cada critério de 1 a 5. Acima de 80 EXCELENTE · 65 ALTO · 50 TESTAR · 35 BAIXO · abaixo disso DESCARTAR.</p>';
+    }
+    h += '</section>';
+  }
+
+  if(tab==="pesquisa"){
+    const v = s.pesquisa.visitas;
+    h += '<section class="blk"><div class="blk-h"><h2>Visitas de campo</h2><button class="btn sm primary" data-act="add" data-list="pesquisa.visitas" data-tpl="visita">+ Visita</button></div>';
+    if(!v.length) h += '<div class="empty">Nenhuma visita registrada. É esta etapa que transforma hipótese em evidência.</div>';
+    else h += '<div class="tw"><table><thead><tr><th>Data</th><th>Local</th><th>Horário</th><th>Responsável</th><th class="num">Fluxo obs.</th><th class="num">Abordadas</th><th class="num">Conversas</th><th class="num">Interesses</th><th class="num">Leads</th><th class="num">Aproveit.</th><th>Observações</th><th></th></tr></thead><tbody>'+
+      v.map((x,i)=>{const b="pesquisa.visitas."+i, ap = num(x.abordadas)? num(x.leads)/num(x.abordadas)*100:0;
+        return '<tr><td>'+inp(b+".data",{type:"date"})+'</td><td style="min-width:150px">'+inp(b+".local")+'</td><td style="width:110px">'+inp(b+".horario",{ph:"14h–18h"})+'</td><td>'+inp(b+".responsavel")+'</td>'+
+        ["fluxo","abordadas","conversas","interesses","leads"].map(k=>'<td class="num" style="width:76px">'+inp(b+"."+k,{t:"num",type:"number"})+'</td>').join("")+
+        '<td class="num">'+pct(ap,1)+'</td><td style="min-width:200px">'+inp(b+".obs")+'</td><td>'+delBtn("pesquisa.visitas",x.id)+'</td></tr>';}).join("")+
+      '</tbody></table></div>';
+    h += '</section>';
+    const porLocal = {};
+    v.forEach(x=>{const k=(x.local||"—").trim(); if(!porLocal[k]) porLocal[k]={local:k,ab:0,leads:0,fluxo:0,n:0};
+      const o=porLocal[k]; o.ab+=num(x.abordadas); o.leads+=num(x.leads); o.fluxo+=num(x.fluxo); o.n++;});
+    const arr = Object.values(porLocal).map(o=>{o.ap = o.ab? o.leads/o.ab*100:0; return o;}).sort((a,b)=>b.ap-a.ap);
+    if(arr.length){
+      const max = Math.max.apply(null, arr.map(o=>o.ap).concat([1]));
+      h += '<section class="blk"><div class="blk-h"><h2>Potencial observado em campo</h2><span class="hint">leads gerados ÷ pessoas abordadas</span></div><div class="card">'+
+        arr.map(o=>'<div style="display:grid;grid-template-columns:180px 1fr 70px;gap:12px;align-items:center;padding:7px 0"><span style="font-weight:500">'+esc(o.local)+'</span>'+bar(o.ap/max*100, o.ap>=20?"ok":o.ap>=10?"warn":"crit")+'<span class="mono" style="text-align:right">'+pct(o.ap,1)+'</span></div>').join("")+
+        '</div></section>';
+    }
+  }
+
+  if(tab==="ranking"){
+    const arr = locais.map(l=>({l, sc:localScore(l)})).sort((a,b)=>b.sc-a.sc);
+    if(!arr.length) h += '<div class="empty">Cadastre locais na aba anterior para ver o ranking.</div>';
+    else h += '<section class="blk"><div class="blk-h"><h2>Ranking dos locais por score</h2><span class="hint">os '+num(S().premissas.numLocais)+' primeiros são os candidatos naturais ao piloto</span></div><div class="card">'+
+      arr.map((x,i)=>{const cl=localClass(x.sc);
+        return '<div style="display:grid;grid-template-columns:26px 1fr 190px 100px 96px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)">'+
+        '<span class="mono dim">'+(i+1)+'</span><span style="font-weight:500">'+esc(x.l.nome||"(sem nome)")+'<span class="dim tiny"> · '+esc(x.l.tipo||"")+'</span></span>'+
+        bar(x.sc, cl.c==="ok"?"ok":cl.c==="warn"?"warn":cl.c==="crit"?"crit":"")+
+        '<span class="mono" style="text-align:right">'+x.sc+' / 100</span>'+semPill(cl.c,cl.l)+'</div>';}).join("")+
+      '</div></section>';
+  }
+  return h;
+};
+
+/* ---------------- 06 EQUIPE ---------------- */
+App.view_equipe = function(){
+  const s=S();
+  let h = head("06 · Pessoas","Equipe do projeto","Somente quem está diretamente ligado a este projeto. Não é cadastro de RH: é quem responde por cada frente.");
+  h += '<section class="blk"><div class="blk-h"><h2>Pessoas</h2><button class="btn sm primary" data-act="add" data-list="equipe.pessoas" data-tpl="pessoa">+ Pessoa</button></div>'+
+    '<div class="tw"><table><thead><tr><th>Nome</th><th>Função</th><th>Responsabilidade no projeto</th><th>Fase</th><th>Status</th><th>Entrada</th><th>Observações</th><th></th></tr></thead><tbody>'+
+    s.equipe.pessoas.map((p,i)=>{const b="equipe.pessoas."+i;
+      return '<tr><td style="min-width:150px">'+inp(b+".nome",{ph:"nome"})+'</td><td style="min-width:140px">'+inp(b+".funcao")+'</td>'+
+      '<td style="min-width:260px">'+inp(b+".responsabilidade")+'</td><td style="width:110px">'+inp(b+".fase")+'</td>'+
+      '<td>'+sel(b+".status",STATUS_OPTS)+'</td><td>'+inp(b+".entrada",{type:"date"})+'</td><td>'+inp(b+".obs")+'</td><td>'+delBtn("equipe.pessoas",p.id)+'</td></tr>';}).join("")+
+    '</tbody></table></div></section>';
+
+  const captadores = s.equipe.pessoas.filter(p=>/captador/i.test(p.funcao||""));
+  h += '<section class="blk"><div class="blk-h"><h2>Como o projeto se organiza</h2></div><div class="card">'+
+    '<div class="theory">'+
+    ['CEO — patrocinador, decide GO/NO GO',
+     'Diretor de Marketing — dono do projeto e do dossiê',
+     'Responsável de campo — coordena os captadores no dia a dia',
+     'Captadores ('+(captadores.length||num(S().premissas.numCaptadores))+') — abordagem, consentimento e cadastro do lead'
+    ].map((t,i)=> (i?'<div class="arrow">↓</div>':'')+'<div class="step"><div class="st">Nível '+(i+1)+'</div><div class="sd">'+esc(t)+'</div></div>').join("")+
+    '</div></div></section>';
+
+  h += '<section class="blk"><div class="blk-h"><h2>Integração com as ferramentas atuais</h2><span class="hint">checklist de integração — não se cria CRM aqui</span></div>'+
+    '<div class="tw"><table><thead><tr><th>Item</th><th>Responsável</th><th>Status</th><th>Observação</th></tr></thead><tbody>'+
+    s.tecnologia.itens.map((x,i)=>'<tr><td style="min-width:280px">'+inp("tecnologia.itens."+i+".item")+'</td><td>'+inp("tecnologia.itens."+i+".responsavel")+'</td><td>'+sel("tecnologia.itens."+i+".status",STATUS_OPTS)+'</td><td>'+inp("tecnologia.itens."+i+".obs")+'</td></tr>').join("")+
+    '</tbody></table></div></section>';
+  return h;
+};
+
+/* ---------------- 07 PILOTO ---------------- */
+App.view_piloto = function(){
+  const s=S(), d=D(), tab=T("piloto","config");
+  let h = head("07 · Validação","Piloto de "+num(s.piloto.config.duracao||s.premissas.duracaoPiloto)+" dias","Operação real, controlada e medida. O diário registra o consolidado do dia — o detalhe de cada lead continua no CRM.");
+  h += tabsHtml("piloto",[["config","Configuração"],["diario","Diário"],["resultado","Resultado do piloto"]],tab);
+
+  if(tab==="config"){
+    h += '<section class="blk"><div class="card"><div class="grid g3">'+
+      field("Início", inp("piloto.config.inicio",{type:"date"}))+
+      field("Término", inp("piloto.config.fim",{type:"date"}))+
+      field("Duração (dias)", inp("piloto.config.duracao",{t:"num"}))+
+      field("Captadores", inp("piloto.config.captadores",{t:"num"}))+
+      field("Locais", inp("piloto.config.locais",{t:"num"}))+
+      field("Orçamento (R$)", inp("piloto.config.orcamento",{t:"num"}))+
+    '</div><div style="margin-top:14px">'+field("Objetivo do piloto", ta("piloto.config.objetivo",{rows:2}))+'</div></div></section>'+
+    '<section class="blk"><div class="blk-h"><h2>Metas derivadas das premissas</h2><button class="btn sm ghost" data-act="goto" data-to="projeto">Ajustar premissas</button></div><div class="kpis g4">'+
+      kpi("Leads", int(d.metaLeads))+kpi("Qualificados", int(d.metaQualificados))+
+      kpi("Triagens", int(d.metaTriagens))+kpi("Pastas", int(d.metaPastas))+
+      kpi("Receita esperada", brl(d.metaReceita))+kpi("Orçamento", brl(d.orcamento))+
+      kpi("CAC máximo", brl(d.pr.cacMax))+kpi("Dias registrados", String(d.agg.dias))+
+    '</div></section>';
+  }
+
+  if(tab==="diario"){
+    const dl = s.piloto.diario;
+    h += '<section class="blk"><div class="blk-h"><h2>Diário do piloto</h2><button class="btn sm primary" data-act="add" data-list="piloto.diario" data-tpl="diario">+ Registro</button></div>'+
+      '<p class="tiny dim" style="margin-bottom:10px">Preencha diária ou semanalmente. O custo do dia é a parte variável da operação (remuneração e deslocamento dos captadores) e entra no investimento realizado — não repita esses valores na aba Investimento.</p>';
+    if(!dl.length) h += '<div class="empty">Nenhum registro ainda. Um registro por dia e por local é o suficiente.</div>';
+    else h += '<div class="tw"><table><thead><tr><th>Data</th><th>Local</th><th class="num">Captadores</th><th class="num">Leads</th><th class="num">Qualif.</th><th class="num">Triagens</th><th class="num">Pastas</th><th class="num">Custo do dia</th><th>Observações</th><th></th></tr></thead><tbody>'+
+      dl.map((x,i)=>{const b="piloto.diario."+i;
+        return '<tr><td style="width:130px">'+inp(b+".data",{type:"date"})+'</td><td style="min-width:150px">'+inp(b+".local",{ph:"local"})+'</td>'+
+        ["captadores","leads","qualificados","triagens","pastas","investimento"].map(k=>'<td class="num" style="width:84px">'+inp(b+"."+k,{t:"num",type:"number"})+'</td>').join("")+
+        '<td style="min-width:180px">'+inp(b+".obs")+'</td><td>'+delBtn("piloto.diario",x.id)+'</td></tr>';}).join("")+
+      '<tr style="background:var(--surface-2);font-weight:600"><td colspan="3">Total — '+d.agg.dias+' registros</td>'+
+      '<td class="num">'+int(d.agg.leads)+'</td><td class="num">'+int(d.agg.qualificados)+'</td><td class="num">'+int(d.agg.triagens)+'</td><td class="num">'+int(d.agg.pastas)+'</td><td class="num">'+brl(d.agg.custo)+'</td><td colspan="2"></td></tr>'+
+      '</tbody></table></div>';
+    h += '</section>';
+  }
+
+  if(tab==="resultado"){
+    const rows = [
+      ["Leads", d.metaLeads, d.agg.leads, int, true],
+      ["Qualificados", d.metaQualificados, d.agg.qualificados, int, true],
+      ["Triagens", d.metaTriagens, d.agg.triagens, int, true],
+      ["Pastas", d.metaPastas, d.agg.pastas, int, true],
+      ["Investimento", d.orcamento, d.invReal, brl, false],
+      ["Receita", d.metaReceita, d.receita, brl, true]
+    ];
+    h += '<section class="blk"><div class="blk-h"><h2>Planejado x realizado</h2><span class="hint">'+d.agg.dias+' dias registrados</span></div><div class="cmp">'+
+      '<div class="row head"><span>Indicador</span><span>Realizado sobre a meta</span><span class="num">Planejado</span><span class="num">Realizado</span><span class="num">Variação</span></div>'+
+      rows.map(r=>{
+        const meta=num(r[1]), real=num(r[2]);
+        const p = meta? real/meta*100 : 0;
+        const varia = meta? (real/meta-1)*100 : 0;
+        const good = r[4]? (p>=95?"ok":p>=80?"warn":"crit") : (real<=meta?"ok": real<=meta*1.1?"warn":"crit");
+        return '<div class="row"><span class="nm">'+r[0]+'</span>'+bar(clamp(p,0,100), good, 100)+
+          '<span class="num dim">'+r[3](meta)+'</span><span class="num">'+r[3](real)+'</span>'+
+          '<span class="num" style="color:var(--'+(good==="ok"?"ok":good==="warn"?"warn":"crit")+')">'+(varia>=0?"+":"")+pct(varia,0)+'</span></div>';
+      }).join("")+'</div></section>';
+    h += '<div class="kpis g4">'+
+      kpi("CAC", d.agg.pastas?brl(d.cac):"—","limite "+brl(d.pr.cacMax), d.semCac==="idle"?"":d.semCac)+
+      kpi("ROI", d.invReal?pct(d.roi,0):"—","receita − investimento ÷ investimento", d.semRoi==="idle"?"":d.semRoi)+
+      kpi("Pastas por captador", d.prodCaptador.toFixed(1), "meta "+(num(d.pr.metaPastasCaptadorMes)*(num(d.pr.duracaoPiloto)/30)).toFixed(1))+
+      kpi("Conversão lead → pasta", pct(d.convLeadPasta,1), int(d.agg.leads)+" leads → "+int(d.agg.pastas)+" pastas")+
+    '</div>';
+    if(d.locais.length){
+      h += '<section class="blk" style="margin-top:22px"><div class="blk-h"><h2>Desempenho por local</h2><span class="hint">CAC direto = custo do dia registrado ÷ pastas do local</span></div>'+
+        '<div class="tw"><table><thead><tr><th>Local</th><th class="num">Dias</th><th class="num">Leads</th><th class="num">Pastas</th><th class="num">Conversão</th><th class="num">Custo</th><th class="num">CAC direto</th><th class="num">Receita</th><th>Situação</th></tr></thead><tbody>'+
+        d.locais.map(l=>{const c = l.cac===0?"idle": l.cac<=num(d.pr.cacMax)?"ok": l.cac<=num(d.pr.cacMax)*1.2?"warn":"crit";
+          return '<tr><td><strong>'+esc(l.local)+'</strong></td><td class="num">'+l.dias+'</td><td class="num">'+int(l.leads)+'</td><td class="num">'+int(l.pastas)+'</td><td class="num">'+pct(l.conv,1)+'</td><td class="num">'+brl(l.custo)+'</td><td class="num">'+(l.cac?brl(l.cac):"—")+'</td><td class="num">'+brl(l.receita)+'</td><td>'+semPill(c, c==="ok"?"Dentro do limite":c==="warn"?"Atenção":c==="crit"?"Acima do limite":"Sem pasta")+'</td></tr>';}).join("")+
+        '</tbody></table></div></section>';
+    }
+  }
+  return h;
+};
+
+/* ---------------- 08 INVESTIMENTO ---------------- */
+const CATS = ["Pessoas","Equipamentos","Material","Tecnologia","Transporte","Treinamento","Outros"];
+App.view_investimento = function(){
+  const s=S(), d=D(), tab=T("investimento","orcamento");
+  let h = head("08 · Dinheiro","Investimento","Quanto o projeto previu gastar, quanto de fato gastou e o que isso significa em cenários de escala.");
+  h += tabsHtml("investimento",[["orcamento","Orçamento"],["modelo","Modelo financeiro"],["escala","Projeção de escala"]],tab);
+
+  if(tab==="orcamento"){
+    const itens = s.investimento.itens;
+    const porCat = {};
+    itens.forEach(i=>{ const c=i.categoria||"Outros"; if(!porCat[c]) porCat[c]={prev:0,real:0}; porCat[c].prev+=num(i.previsto); porCat[c].real+=num(i.realizado); });
+    const desvio = d.invReal - d.orcamento;
+    h += '<div class="kpis g4" style="margin-bottom:20px">'+
+      kpi("Orçamento", brl(d.orcamento), "definido nas premissas")+
+      kpi("Previsto na planilha", brl(d.invPrev), itens.length+" linhas")+
+      kpi("Realizado", brl(d.invReal), "inclui "+brl(d.agg.custo)+" do diário do piloto")+
+      kpi("Desvio", (desvio>=0?"+":"")+brl(desvio), pct(safeDiv(desvio,d.orcamento)*100,0)+" do orçamento", d.semOrc==="idle"?"":d.semOrc)+
+    '</div>';
+    h += '<section class="blk"><div class="blk-h"><h2>Linhas de investimento</h2><button class="btn sm primary" data-act="add" data-list="investimento.itens" data-tpl="invest">+ Linha</button></div>'+
+      '<div class="tw"><table><thead><tr><th>Categoria</th><th>Item</th><th class="num">Previsto</th><th class="num">Realizado</th><th class="num">Diferença</th><th>Status</th><th>Observação</th><th></th></tr></thead><tbody>'+
+      itens.map((it,i)=>{const b="investimento.itens."+i, dif=num(it.realizado)-num(it.previsto);
+        return '<tr><td style="width:140px">'+sel(b+".categoria",CATS)+'</td><td style="min-width:220px">'+inp(b+".item")+'</td>'+
+        '<td class="num" style="width:110px">'+inp(b+".previsto",{t:"num",type:"number"})+'</td>'+
+        '<td class="num" style="width:110px">'+inp(b+".realizado",{t:"num",type:"number"})+'</td>'+
+        '<td class="num"'+(dif>0?' style="color:var(--crit)"':dif<0?' style="color:var(--ok)"':'')+'>'+(dif>0?"+":"")+brl(dif)+'</td>'+
+        '<td>'+sel(b+".status",STATUS_OPTS)+'</td><td>'+inp(b+".obs")+'</td><td>'+delBtn("investimento.itens",it.id)+'</td></tr>';}).join("")+
+      '<tr style="background:var(--surface-2);font-weight:600"><td colspan="2">Total das linhas</td><td class="num">'+brl(d.invPrev)+'</td><td class="num">'+brl(d.invReal-d.agg.custo)+'</td><td class="num"></td><td colspan="3"></td></tr>'+
+      '<tr style="background:var(--surface-2);font-weight:600"><td colspan="2">+ custo variável registrado no diário</td><td class="num">—</td><td class="num">'+brl(d.agg.custo)+'</td><td colspan="4"></td></tr>'+
+      '</tbody></table></div></section>';
+    h += '<section class="blk"><div class="blk-h"><h2>Por categoria</h2></div><div class="card">'+
+      Object.keys(porCat).map(c=>{const o=porCat[c], p = o.prev? o.real/o.prev*100:0;
+        return '<div style="display:grid;grid-template-columns:130px 1fr 100px 100px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span style="font-weight:500">'+esc(c)+'</span>'+
+        bar(clamp(p,0,100), p>105?"crit":p>100?"warn":"ok",100)+'<span class="mono dim" style="text-align:right">'+brl(o.prev)+'</span><span class="mono" style="text-align:right">'+brl(o.real)+'</span></div>';}).join("")+
+      '</div></section>';
+  }
+
+  if(tab==="modelo"){
+    const pr=d.pr;
+    const cenarios = [["Conservador",0.7,"crit"],["Base",1,""],["Otimista",1.3,"ok"]];
+    h += '<section class="blk"><div class="blk-h"><h2>Simulador</h2><span class="hint">altere as premissas e os três cenários se recalculam</span></div>'+
+      '<div class="card"><div class="grid g4">'+
+        field("Captadores", inp("premissas.numCaptadores",{t:"num",type:"number"}))+
+        field("Pastas por captador / mês", inp("premissas.metaPastasCaptadorMes",{t:"num",type:"number"}))+
+        field("Receita por pasta (R$)", inp("premissas.receitaPorPasta",{t:"num",type:"number"}))+
+        field("Custo por captador / mês (R$)", inp("premissas.custoCaptadorMes",{t:"num",type:"number"}))+
+      '</div></div></section>';
+    h += '<div class="grid g3">'+cenarios.map(c=>{
+      const pastasCap = num(pr.metaPastasCaptadorMes)*c[1];
+      const pastas = pastasCap*num(pr.numCaptadores);
+      const receita = pastas*num(pr.receitaPorPasta);
+      const custo = num(pr.custoCaptadorMes)*num(pr.numCaptadores) + num(pr.custoFixoMes);
+      const res = receita-custo;
+      const cac = pastas? custo/pastas : 0;
+      return '<section class="card"><div class="blk-h"><h2>'+c[0]+'</h2><span class="tag">'+(c[1]*100).toFixed(0)+'% da meta</span></div>'+
+        '<div style="display:grid;gap:7px;margin-top:6px">'+
+        [["Pastas por captador", pastasCap.toFixed(1)],["Pastas totais / mês", pastas.toFixed(1)],
+         ["Receita / mês", brl(receita)],["Custo / mês", brl(custo)],
+         ["Resultado / mês", '<strong style="color:var(--'+(res>=0?"ok":"crit")+')">'+brl(res)+'</strong>'],
+         ["CAC", brl(cac)+' <span class="tiny dim">(limite '+brl(pr.cacMax)+')</span>']
+        ].map(r=>'<div style="display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px"><span class="muted tiny">'+r[0]+'</span><span class="mono">'+r[1]+'</span></div>').join("")+
+        '</div></section>';}).join("")+'</div>';
+  }
+
+  if(tab==="escala"){
+    const pr=d.pr;
+    const etapas=[2,5,10,20,50];
+    h += '<section class="blk"><div class="blk-h"><h2>Projeção de escala</h2><span class="hint">cada etapa só é liberada com o critério da etapa anterior atingido</span></div>'+
+      '<div class="tw"><table><thead><tr><th>Etapa</th><th class="num">Captadores</th><th class="num">Locais</th><th class="num">Investimento / mês</th><th class="num">Pastas / mês</th><th class="num">Receita / mês</th><th class="num">Resultado / mês</th><th class="num">CAC esperado</th><th>Critério para avançar</th></tr></thead><tbody>'+
+      etapas.map((n,i)=>{
+        const custo = n*num(pr.custoCaptadorMes)+num(pr.custoFixoMes);
+        const pastas = n*num(pr.metaPastasCaptadorMes);
+        const receita = pastas*num(pr.receitaPorPasta);
+        const cac = pastas? custo/pastas : 0;
+        const locais = Math.max(1, Math.ceil(n/ (num(pr.numCaptadores)||2) * num(pr.numLocais)));
+        return '<tr><td><strong>Etapa '+(i+1)+'</strong></td><td class="num">'+n+'</td><td class="num">'+locais+'</td><td class="num">'+brl(custo)+'</td><td class="num">'+int(pastas)+'</td><td class="num">'+brl(receita)+'</td>'+
+          '<td class="num" style="color:var(--'+(receita-custo>=0?"ok":"crit")+')">'+brl(receita-custo)+'</td><td class="num">'+brl(cac)+'</td>'+
+          '<td class="tiny muted">'+(i===0?"Piloto com CAC ≤ "+brl(pr.cacMax):"CAC ≤ "+brl(pr.cacMax)+" por 30 dias na etapa "+i)+'</td></tr>';}).join("")+
+      '</tbody></table></div>'+
+      '<p class="tiny dim" style="margin-top:10px">A projeção usa o custo por captador e a meta de pastas das premissas, sem ganho de escala. Se houver diluição de custo fixo, ajuste “custo por captador / mês” para a etapa correspondente.</p></section>';
+  }
+  return h;
+};
+
+/* ---------------- 09 RESULTADOS ---------------- */
+App.view_resultados = function(){
+  const d=D();
+  let h = head("09 · Entrega","O que o projeto entregou","Apenas o consolidado necessário para avaliar o canal. O detalhe de cada lead permanece no CRM da V3.");
+  if(d.agg.dias===0) return h+'<div class="empty">Ainda não há dias registrados no diário do piloto. Assim que o primeiro registro entrar, este painel passa a ter números.</div>';
+  const funil = [["Leads", d.agg.leads, d.metaLeads],["Qualificados", d.agg.qualificados, d.metaQualificados],["Triagens", d.agg.triagens, d.metaTriagens],["Pastas", d.agg.pastas, d.metaPastas]];
+  const maxF = Math.max.apply(null, funil.map(f=>Math.max(num(f[1]),num(f[2]))).concat([1]));
+  h += '<div class="kpis g4" style="margin-bottom:22px">'+
+    kpi("Leads", int(d.agg.leads), "meta "+int(d.metaLeads))+
+    kpi("Qualificados", int(d.agg.qualificados), pct(safeDiv(d.agg.qualificados,d.agg.leads)*100,1)+" dos leads")+
+    kpi("Pastas", int(d.agg.pastas), "meta "+int(d.metaPastas), d.semPastas)+
+    kpi("Receita", brl(d.receita), "meta "+brl(d.metaReceita))+
+    kpi("CAC", brl(d.cac), "limite "+brl(d.pr.cacMax), d.semCac)+
+    kpi("ROI", pct(d.roi,0), "investimento "+brl(d.invReal), d.semRoi)+
+    kpi("Conversão lead → pasta", pct(d.convLeadPasta,1))+
+    kpi("Produtividade", d.prodCaptador.toFixed(1), "pastas por captador")+
+  '</div>';
+  h += '<section class="blk"><div class="blk-h"><h2>Funil do canal</h2><span class="hint">barra = realizado · marca = meta do período</span></div><div class="card">'+
+    funil.map(f=>'<div style="display:grid;grid-template-columns:130px 1fr 90px 80px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)">'+
+      '<span style="font-weight:500">'+f[0]+'</span>'+bar(num(f[1])/maxF*100, num(f[1])>=num(f[2])*0.95?"ok":num(f[1])>=num(f[2])*0.8?"warn":"crit", num(f[2])/maxF*100)+
+      '<span class="mono" style="text-align:right">'+int(f[1])+'</span><span class="mono dim" style="text-align:right">meta '+int(f[2])+'</span></div>').join("")+
+    '</div></section>';
+  if(d.locais.length){
+    const maxP = Math.max.apply(null, d.locais.map(l=>l.pastas).concat([1]));
+    h += '<section class="blk"><div class="blk-h"><h2>Pastas por local</h2></div><div class="card">'+
+      d.locais.map(l=>'<div style="display:grid;grid-template-columns:180px 1fr 70px 110px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)">'+
+      '<span style="font-weight:500">'+esc(l.local)+'</span>'+bar(l.pastas/maxP*100, l.cac&&l.cac<=num(d.pr.cacMax)?"ok":l.cac?"warn":"")+
+      '<span class="mono" style="text-align:right">'+int(l.pastas)+'</span><span class="mono dim" style="text-align:right">CAC '+(l.cac?brl(l.cac):"—")+'</span></div>').join("")+
+      '</div></section>';
+  }
+  return h;
+};
+
+/* ---------------- 10 ANÁLISE ---------------- */
+const CAUSAS = ["Baixo fluxo no local","Baixo volume de abordagem","Baixa conversão da abordagem","Baixa qualidade do lead","Problema de localização","Problema de equipe","Problema de processo","Problema de horário","Outro"];
+App.view_analise = function(){
+  const s=S(), d=D(), tab=T("analise","comparacao");
+  let h = head("10 · Leitura","Análise","Planejado contra realizado, com diagnóstico e critério de decisão definidos antes de olhar o resultado.");
+  h += tabsHtml("analise",[["comparacao","Planejado x realizado"],["diagnostico","Diagnóstico"],["gonogo","GO / NO GO"]],tab);
+
+  if(tab==="comparacao"){
+    const rows = [
+      ["Prazo (progresso)", d.progressoEsperado+"%", d.progresso+"%", d.semProg, d.progresso-d.progressoEsperado, "pp"],
+      ["Investimento", brl(d.orcamento), brl(d.invReal), d.semOrc, safeDiv(d.invReal-d.orcamento,d.orcamento)*100, "%"],
+      ["Produtividade (pastas/captador)", (num(d.pr.metaPastasCaptadorMes)*(num(d.pr.duracaoPiloto)/30)).toFixed(1), d.prodCaptador.toFixed(1), d.agg.dias? d.sem(d.prodCaptador, num(d.pr.metaPastasCaptadorMes)*(num(d.pr.duracaoPiloto)/30), true):"idle", 0, ""],
+      ["Leads", int(d.metaLeads), int(d.agg.leads), d.agg.dias? d.sem(d.agg.leads,d.metaLeads,true):"idle", safeDiv(d.agg.leads-d.metaLeads,d.metaLeads)*100, "%"],
+      ["Conversão lead → pasta", pct(num(d.pr.convLeadQualificado)*num(d.pr.convQualificadoTriagem)*num(d.pr.convTriagemPasta)/10000,1), pct(d.convLeadPasta,1), "idle", 0, ""],
+      ["Pastas", int(d.metaPastas), int(d.agg.pastas), d.semPastas, safeDiv(d.agg.pastas-d.metaPastas,d.metaPastas)*100, "%"],
+      ["Receita", brl(d.metaReceita), brl(d.receita), d.agg.dias? d.sem(d.receita,d.metaReceita,true):"idle", safeDiv(d.receita-d.metaReceita,d.metaReceita)*100, "%"],
+      ["CAC", brl(d.pr.cacMax), d.agg.pastas?brl(d.cac):"—", d.semCac, safeDiv(d.cac-num(d.pr.cacMax),num(d.pr.cacMax))*100, "%"],
+      ["ROI", "> 0%", d.invReal?pct(d.roi,0):"—", d.semRoi, 0, ""]
+    ];
+    h += '<div class="tw"><table><thead><tr><th>Indicador</th><th>Planejado</th><th>Realizado</th><th class="num">Variação</th><th>Situação</th></tr></thead><tbody>'+
+      rows.map(r=>{
+        const lab = {ok:"Dentro da meta",warn:"Atenção",crit:"Fora da meta",idle:"Sem dados"}[r[3]]||"Sem dados";
+        const v = r[5]? (r[4]>=0?"+":"")+ (r[5]==="pp"? r[4].toFixed(0)+" pp" : pct(r[4],0)) : "—";
+        return '<tr><td><strong>'+r[0]+'</strong></td><td class="mono dim">'+r[1]+'</td><td class="mono">'+r[2]+'</td><td class="num">'+v+'</td><td>'+semPill(r[3]==="idle"?"idle":r[3], lab)+'</td></tr>';
+      }).join("")+'</tbody></table></div>';
+  }
+
+  if(tab==="diagnostico"){
+    const recs = motor().filter(r=>r.grav!=="ok");
+    h += '<section class="blk"><div class="blk-h"><h2>O que os números estão dizendo</h2></div>';
+    if(!recs.length && d.agg.dias===0) h += '<div class="empty">Sem dias registrados no diário, não há o que diagnosticar. Registre o piloto na seção 07.</div>';
+    else if(!recs.length) h += '<div class="insight opp"><h3>Diagnóstico</h3><p>Nenhum desvio relevante. Todos os indicadores medidos estão dentro das faixas definidas nas premissas.</p></div>';
+    else h += recs.map(r=>'<div class="insight att" style="margin-bottom:12px"><h3>'+esc(r.tema)+'</h3><p><strong>'+esc(r.oque)+'</strong></p><p class="muted" style="font-size:12.5px">'+esc(r.porque)+'</p></div>').join("");
+    h += '</section>';
+    h += '<section class="blk"><div class="blk-h"><h2>Possíveis causas</h2><span class="hint">marque o que o gestor observou em campo — isso fica registrado no dossiê</span></div><div class="card"><div class="grid g3">'+
+      CAUSAS.map(c=>{const on=(s.geral.causas||[]).includes(c);
+        return '<button class="chk" data-act="causa" data-c="'+esc(c)+'" style="width:100%;text-align:left;cursor:pointer;'+(on?'border-color:var(--accent);background:var(--accent-soft)':'')+'"><span style="font-size:14px">'+(on?"☑":"☐")+'</span><span class="t"><span class="ti">'+esc(c)+'</span></span></button>';}).join("")+
+      '</div></div></section>';
+  }
+
+  if(tab==="gonogo"){
+    const g = s.geral.goNoGo||{};
+    const crit = [
+      ["Pastas", int(d.metaPastas), int(d.agg.pastas), d.semPastas],
+      ["CAC", brl(d.pr.cacMax), d.agg.pastas?brl(d.cac):"—", d.semCac],
+      ["Receita", brl(d.metaReceita), brl(d.receita), d.agg.dias? d.sem(d.receita,d.metaReceita,true):"idle"],
+      ["ROI", "> 0%", d.invReal?pct(d.roi,0):"—", d.semRoi],
+      ["Prazo", d.progressoEsperado+"%", d.progresso+"%", d.semProg],
+      ["Compliance", "0 pendências", String((s.compliance.itens||[]).filter(c=>c.status!=="concluido").length)+" pendências", (s.compliance.itens||[]).filter(c=>c.status!=="concluido").length?"crit":"ok"]
+    ];
+    const criticos = crit.filter(c=>c[3]==="crit").length, atencao = crit.filter(c=>c[3]==="warn").length, semDados = crit.filter(c=>c[3]==="idle").length;
+    let rec, recCls, recTxt;
+    if(semDados>=3){ rec="AGUARDAR"; recCls="idle"; recTxt="Ainda não há resultado medido suficiente para decidir. Complete o piloto e o diário antes de levar a decisão à diretoria."; }
+    else if(criticos===0 && atencao<=1){ rec="ESCALAR"; recCls="ok"; recTxt="Os critérios definidos no início foram atingidos. A recomendação é aprovar a primeira etapa de escala, mantendo o mesmo critério de CAC para liberar a etapa seguinte."; }
+    else if(criticos>=2){ rec="ENCERRAR"; recCls="crit"; recTxt="Dois ou mais critérios ficaram fora da meta. A recomendação é encerrar o canal nesta configuração — ou reiniciar o piloto com locais e modelo diferentes, tratando como um novo teste."; }
+    else { rec="AJUSTAR"; recCls="warn"; recTxt="O canal mostrou resultado, mas fora de pelo menos um critério. A recomendação é executar um ciclo de ajuste de 14 dias e reavaliar antes de liberar investimento adicional."; }
+
+    h += '<section class="blk"><div class="blk-h"><h2>Critérios de decisão</h2><span class="hint">definidos nas premissas, antes do resultado</span></div>'+
+      '<div class="tw"><table><thead><tr><th>Critério</th><th class="num">Meta</th><th class="num">Realizado</th><th>Status</th></tr></thead><tbody>'+
+      crit.map(c=>'<tr><td><strong>'+c[0]+'</strong></td><td class="num dim">'+c[1]+'</td><td class="num">'+c[2]+'</td><td>'+semPill(c[3]==="idle"?"idle":c[3], {ok:"Atingido",warn:"Atenção",crit:"Não atingido",idle:"Sem dados"}[c[3]])+'</td></tr>').join("")+
+      '</tbody></table></div></section>';
+    h += '<section class="blk"><div class="card" style="border-left:3px solid var(--'+(recCls==="ok"?"ok":recCls==="warn"?"warn":recCls==="crit"?"crit":"line-2")+')">'+
+      '<div class="lbl">Recomendação do sistema</div>'+
+      '<h2 style="font-size:26px;margin-top:8px;color:var(--'+(recCls==="ok"?"ok":recCls==="warn"?"warn":recCls==="crit"?"crit":"text")+')">'+rec+'</h2>'+
+      '<p class="muted" style="margin-top:8px;max-width:70ch">'+esc(recTxt)+'</p></div></section>';
+    h += '<section class="blk"><div class="blk-h"><h2>Decisão do CEO</h2></div><div class="card">'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">'+
+      [["ESCALAR","primary"],["AJUSTAR",""],["ENCERRAR",""]].map(x=>'<button class="btn '+(g.decisao===x[0]?"primary":"")+'" data-act="gono" data-v="'+x[0]+'">'+(g.decisao===x[0]?"✓ ":"")+x[0]+'</button>').join("")+
+      '</div>'+
+      (g.decisao? '<p class="muted" style="margin-bottom:12px">Decisão registrada: <strong>'+esc(g.decisao)+'</strong> em '+fmtDate(g.data)+'.</p>':'')+
+      '<div class="grid g2">'+field("Quem decidiu", inp("geral.goNoGo.por"))+field("Data", inp("geral.goNoGo.data",{type:"date"}))+'</div>'+
+      '<div style="margin-top:12px">'+field("Justificativa da decisão", ta("geral.goNoGo.justificativa",{rows:3}))+'</div>'+
+      '</div></section>';
+  }
+  return h;
+};
+
+/* ---------------- 11 PLANO DE AÇÃO RECOMENDADO ---------------- */
+App.view_recomendado = function(){
+  const s=S(), recs = motor();
+  let h = head("11 · Decisão operacional","O que fazer agora","Cada recomendação nasce de uma regra explícita sobre os dados preenchidos — nunca de palpite. Aceite para levar a ação para a matriz.");
+  const rejeitadas = (s.acoes.recusadas||[]).length;
+  h += '<section class="blk"><div class="blk-h"><h2>Recomendações do momento</h2>'+(rejeitadas?'<button class="btn sm ghost" data-act="restaurarRecs">Restaurar '+rejeitadas+' recusada(s)</button>':'')+'</div>';
+  if(!recs.length) h += '<div class="empty">Nenhuma recomendação em aberto. Ou os indicadores estão dentro das faixas, ou as recomendações já viraram ações na matriz abaixo.</div>';
+  else h += recs.map(r=>{
+    const cls = r.grav==="crit"?"crit": r.grav==="warn"?"warn":"ok";
+    return '<div class="rec"><div class="rec-h">'+semPill(cls, r.grav==="crit"?"Crítico": r.grav==="warn"?"Atenção":"Oportunidade")+
+      '<span class="t" style="flex:1">'+esc(r.tema)+'</span><span class="tag">'+esc(r.id)+'</span></div>'+
+      '<div class="rec-b">'+
+      '<div class="qa"><div class="q">O que aconteceu</div><div class="a">'+esc(r.oque)+'</div></div>'+
+      '<div class="qa"><div class="q">Por que provavelmente</div><div class="a">'+esc(r.porque)+'</div></div>'+
+      '<div class="qa"><div class="q">O que devemos fazer</div><div class="a"><strong>'+esc(r.acao)+'</strong></div></div>'+
+      '<div class="qa"><div class="q">Quem</div><div class="a">'+esc(r.resp)+'</div></div>'+
+      '<div class="qa"><div class="q">Até quando</div><div class="a">'+r.prazo+' dias — até '+fmtDate(addDays(today(),r.prazo))+'</div></div>'+
+      '<div class="qa"><div class="q">Como saberemos</div><div class="a">'+esc(r.ind)+'</div></div>'+
+      '<div class="why"><strong>Por que estou recomendando isso:</strong> '+esc(r.regra)+'</div>'+
+      '</div><div class="rec-f"><button class="btn primary sm" data-act="aceitar" data-id="'+r.id+'">Aceitar e incluir na matriz</button>'+
+      '<button class="btn sm" data-act="recusar" data-id="'+r.id+'">Recusar</button></div></div>';
+  }).join("");
+  h += '</section>';
+
+  const A = s.acoes.lista;
+  h += '<section class="blk"><div class="blk-h"><h2>Matriz de ações</h2><button class="btn sm primary" data-act="add" data-list="acoes.lista" data-tpl="acao">+ Ação</button></div>';
+  if(!A.length) h += '<div class="empty">Nenhuma ação registrada. Aceite uma recomendação acima ou crie uma ação manualmente.</div>';
+  else h += '<div class="tw"><table><thead><tr><th>Tema</th><th>Problema</th><th>Impacto</th><th>Ação</th><th>Responsável</th><th>Prazo</th><th>Indicador de sucesso</th><th>Status</th><th></th></tr></thead><tbody>'+
+    A.map((a,i)=>{const b="acoes.lista."+i, late = a.status!=="concluido" && a.prazo && a.prazo<today();
+      return '<tr'+(late?' style="background:var(--crit-soft)"':'')+'><td style="width:130px">'+sel(b+".tema",["Pessoas","Local","Horário","Abordagem","Processo","CRM","Marketing","Investimento","Conversão","Qualidade","Compliance"])+'</td>'+
+      '<td style="min-width:220px">'+inp(b+".problema")+'</td>'+
+      '<td style="width:110px">'+sel(b+".impacto",[["alto","Alto"],["medio","Médio"],["baixo","Baixo"]])+'</td>'+
+      '<td style="min-width:260px">'+inp(b+".acao")+'</td>'+
+      '<td style="min-width:130px">'+inp(b+".responsavel")+'</td>'+
+      '<td style="width:130px">'+inp(b+".prazo",{type:"date"})+'</td>'+
+      '<td style="min-width:200px">'+inp(b+".indicador")+'</td>'+
+      '<td>'+sel(b+".status",STATUS_OPTS)+'</td><td>'+delBtn("acoes.lista",a.id)+'</td></tr>';}).join("")+
+    '</tbody></table></div>';
+  h += '</section>';
+  return h;
+};
+
+/* ---------------- 12 DECISÕES E RISCOS ---------------- */
+const PROB = [["baixa","Baixa"],["media","Média"],["alta","Alta"]];
+const IMP = [["baixo","Baixo"],["medio","Médio"],["alto","Alto"],["critico","Crítico"]];
+App.view_decisoes = function(){
+  const s=S(), tab=T("decisoes","decisoes");
+  let h = head("12 · Memória","Decisões e riscos","O que foi decidido, por quem, por quê e com que impacto. É esta memória que evita recomeçar do zero no próximo projeto.");
+  h += tabsHtml("decisoes",[["decisoes","Decisões"],["riscos","Riscos"]],tab);
+
+  if(tab==="decisoes"){
+    const L=s.decisoes.lista;
+    h += '<section class="blk"><div class="blk-h"><h2>Diário de decisões</h2><button class="btn sm primary" data-act="add" data-list="decisoes.lista" data-tpl="decisao">+ Decisão</button></div>';
+    if(!L.length) h += '<div class="empty">Nenhuma decisão registrada ainda.</div>';
+    else h += '<div class="tw"><table><thead><tr><th>Data</th><th>Decisão</th><th>Responsável</th><th>Motivo</th><th>Impacto</th><th>Status</th><th></th></tr></thead><tbody>'+
+      L.slice().sort((a,b)=>(b.data||"")<(a.data||"")?-1:1).map(dc=>{const i=L.indexOf(dc), b="decisoes.lista."+i;
+        return '<tr><td style="width:130px">'+inp(b+".data",{type:"date"})+'</td><td style="min-width:250px">'+inp(b+".decisao")+'</td>'+
+        '<td style="min-width:130px">'+inp(b+".responsavel")+'</td><td style="min-width:220px">'+inp(b+".motivo")+'</td>'+
+        '<td style="min-width:180px">'+inp(b+".impacto")+'</td><td>'+sel(b+".status",STATUS_OPTS)+'</td><td>'+delBtn("decisoes.lista",dc.id)+'</td></tr>';}).join("")+
+      '</tbody></table></div>';
+    h += '</section>';
+  }
+
+  if(tab==="riscos"){
+    const R=s.riscos.lista;
+    h += '<section class="blk"><div class="blk-h"><h2>Riscos do projeto</h2><button class="btn sm primary" data-act="add" data-list="riscos.lista" data-tpl="risco">+ Risco</button></div>'+
+      '<div class="tw"><table><thead><tr><th>Risco</th><th>Probabilidade</th><th>Impacto</th><th>Responsável</th><th>Plano de mitigação</th><th>Status</th><th></th></tr></thead><tbody>'+
+      R.map((r,i)=>{const b="riscos.lista."+i;
+        return '<tr><td style="min-width:240px">'+inp(b+".risco")+'</td><td style="width:120px">'+sel(b+".probabilidade",PROB)+'</td>'+
+        '<td style="width:120px">'+sel(b+".impacto",IMP)+'</td><td style="min-width:140px">'+inp(b+".responsavel")+'</td>'+
+        '<td style="min-width:260px">'+inp(b+".mitigacao")+'</td><td>'+sel(b+".status",STATUS_OPTS)+'</td><td>'+delBtn("riscos.lista",r.id)+'</td></tr>';}).join("")+
+      '</tbody></table></div></section>';
+    const pv={baixa:0,media:1,alta:2}, iv={baixo:0,medio:1,alto:2,critico:3};
+    h += '<section class="blk"><div class="blk-h"><h2>Matriz de risco</h2><span class="hint">probabilidade × impacto</span></div>'+
+      '<div class="tw"><table><thead><tr><th></th>'+IMP.map(x=>'<th class="num">'+x[1]+'</th>').join("")+'</tr></thead><tbody>'+
+      PROB.slice().reverse().map(p=>'<tr><th style="background:var(--surface-2)">'+p[1]+'</th>'+
+        IMP.map(im=>{
+          const items = R.filter(r=>r.probabilidade===p[0] && r.impacto===im[0]);
+          const sev = pv[p[0]]+iv[im[0]];
+          const bgc = sev>=4?"var(--crit-soft)": sev>=3?"var(--warn-soft)": sev>=2?"var(--surface-2)":"transparent";
+          return '<td style="background:'+bgc+';vertical-align:top;min-width:150px">'+(items.length? items.map(r=>'<div class="tiny" style="margin-bottom:4px">• '+esc(r.risco)+'</div>').join(""):'<span class="dim tiny">—</span>')+'</td>';
+        }).join("")+'</tr>').join("")+
+      '</tbody></table></div></section>';
+  }
+  return h;
+};
+
+/* ---------------- 13 DOCUMENTOS ---------------- */
+App.view_documentos = function(){
+  const s=S(), L=s.documentos.lista;
+  let h = head("13 · Acervo","Documentos do projeto","Referências para pesquisas, apresentações, propostas, contratos, estudos e aprovações. Aqui ficam os links e o registro — os arquivos continuam onde a V3 já os guarda.");
+  h += '<section class="blk"><div class="blk-h"><h2>Registro de documentos</h2><button class="btn sm primary" data-act="add" data-list="documentos.lista" data-tpl="doc">+ Documento</button></div>';
+  if(!L.length) h += '<div class="empty">Nenhum documento registrado.</div>';
+  else h += '<div class="tw"><table><thead><tr><th>Documento</th><th>Tipo</th><th>Link</th><th>Responsável</th><th>Data</th><th>Observação</th><th></th></tr></thead><tbody>'+
+    L.map((x,i)=>{const b="documentos.lista."+i;
+      return '<tr><td style="min-width:200px">'+inp(b+".nome")+'</td>'+
+      '<td style="width:160px">'+sel(b+".tipo",["Pesquisa","Apresentação","Proposta","Contrato","Estudo","Foto","Relatório","Aprovação","Documento"])+'</td>'+
+      '<td style="min-width:220px">'+inp(b+".url",{ph:"cole o link"})+(x.url?' <a href="'+esc(x.url)+'" target="_blank" rel="noopener" class="tiny">abrir</a>':'')+'</td>'+
+      '<td>'+inp(b+".responsavel")+'</td><td style="width:130px">'+inp(b+".data",{type:"date"})+'</td>'+
+      '<td style="min-width:180px">'+inp(b+".obs")+'</td><td>'+delBtn("documentos.lista",x.id)+'</td></tr>';}).join("")+
+    '</tbody></table></div>';
+  return h+'</section>';
+};
+
+/* ---------------- 14 RELATÓRIO EXECUTIVO ---------------- */
+function relatorioBlocos(){
+  const s=S(), d=D(), g=s.geral;
+  const compPend = (s.compliance.itens||[]).filter(c=>c.status!=="concluido").length;
+  const recs = motor();
+  const gono = g.goNoGo||{};
+  return [
+    ["Objetivo", g.objetivo],
+    ["Oportunidade", g.oportunidade],
+    ["Público-alvo", g.publico],
+    ["Estratégia", g.modelo],
+    ["Roadmap", "Onze fases, de Estratégia a Escala. Situação atual: Fase "+d.faseAtual.num+" — "+d.faseAtual.nome+", com "+d.progresso+"% das "+d.tot+" tarefas concluídas ("+d.done+" concluídas, "+d.late+" com prazo vencido)."],
+    ["Cronograma", "Início em "+fmtDate(d.inicio)+", término previsto para "+fmtDate(d.fim)+". Progresso de "+d.progresso+"% contra "+d.progressoEsperado+"% esperados para a data de hoje."],
+    ["Territórios", (s.territorios.locais.length? s.territorios.locais.length+" locais avaliados; "+s.territorios.locais.filter(l=>localScore(l)>=65).length+" com score alto ou excelente. Melhores: "+s.territorios.locais.slice().sort((a,b)=>localScore(b)-localScore(a)).slice(0,3).map(l=>l.nome+" ("+localScore(l)+")").join(", ")+"." : "Nenhum local avaliado até o momento.")],
+    ["Equipe", s.equipe.pessoas.filter(p=>p.nome||p.funcao).map(p=>(p.nome||"—")+" — "+p.funcao).join("; ")+"."],
+    ["Investimento", "Orçamento de "+brl(d.orcamento)+"; realizado de "+brl(d.invReal)+" ("+pct(safeDiv(d.invReal,d.orcamento)*100,0)+"). Desvio de "+brl(d.invReal-d.orcamento)+"."],
+    ["Piloto", d.agg.dias? d.agg.dias+" dias registrados, "+num(s.piloto.config.captadores)+" captadores em "+d.locais.length+" locais." : "Piloto ainda não iniciado ou sem registros no diário."],
+    ["Resultados", d.agg.dias? int(d.agg.leads)+" leads, "+int(d.agg.qualificados)+" qualificados, "+int(d.agg.triagens)+" triagens e "+int(d.agg.pastas)+" pastas, gerando "+brl(d.receita)+" de receita." : "Sem resultados medidos."],
+    ["Desvios", d.agg.dias? ("Pastas: "+int(d.agg.pastas)+" contra "+int(d.metaPastas)+" ("+pct(safeDiv(d.agg.pastas-d.metaPastas,d.metaPastas)*100,0)+"). CAC: "+brl(d.cac)+" contra limite de "+brl(d.pr.cacMax)+". Investimento: "+pct(safeDiv(d.invReal-d.orcamento,d.orcamento)*100,0)+" sobre o orçamento.") : "Sem base de comparação."],
+    ["Problemas identificados", (g.causas&&g.causas.length? g.causas.join("; ")+"." : "Nenhuma causa registrada pelo gestor.")+(compPend? " Há "+compPend+" validação(ões) de compliance em aberto." : "")],
+    ["Ações em curso", s.acoes.lista.length? s.acoes.lista.map(a=>a.acao+" ("+a.responsavel+", até "+fmtDate(a.prazo)+")").join("; ")+"." : "Nenhuma ação registrada na matriz."],
+    ["ROI", d.invReal? "Receita de "+brl(d.receita)+" sobre investimento de "+brl(d.invReal)+", resultando em ROI de "+pct(d.roi,0)+" e CAC de "+brl(d.cac)+"." : "Sem investimento realizado registrado."],
+    ["Recomendação", recs.length? recs[0].acao+" (responsável: "+recs[0].resp+", prazo: "+recs[0].prazo+" dias, sucesso medido por: "+recs[0].ind+")." : "Nenhum desvio a corrigir no momento."],
+    ["Decisão registrada", gono.decisao? gono.decisao+" em "+fmtDate(gono.data)+" por "+(gono.por||"—")+". "+(gono.justificativa||"") : "Decisão GO/NO GO ainda não registrada."],
+    ["Próximos passos", d.nextList.slice(0,5).map((x,i)=>(i+1)+". "+x.t.titulo+" ("+(x.t.responsavel||"sem responsável")+", "+(x.t.prazo?fmtDate(x.t.prazo):"sem prazo")+")").join(" ") || "Todas as tarefas concluídas."]
+  ];
+}
+function relatorioMarkdown(){
+  const d=D();
+  let m = "# V3 PREV — Captação Presencial de Clientes (Auxílio-Acidente)\n\n";
+  m += "Dossiê executivo gerado em "+fmtDate(today())+"\n\n";
+  m += "**Status:** "+({ok:"Saudável",warn:"Atenção",crit:"Crítico"}[d.statusGeral]||"—")+" · **Fase:** "+d.faseAtual.num+" — "+d.faseAtual.nome+" · **Progresso:** "+d.progresso+"% · **Investido:** "+brl(d.invReal)+" · **Receita:** "+brl(d.receita)+"\n\n";
+  m += "> "+ondeEstamos(d)+"\n\n";
+  relatorioBlocos().forEach((b,i)=>{ m += "## "+(i+1)+". "+b[0]+"\n\n"+(b[1]||"—")+"\n\n"; });
+  return m;
+}
+App.view_relatorio = function(){
+  const s=S(), d=D(), tab=T("relatorio","dossie");
+  let h = head("14 · Saída","Relatório executivo","O dossiê inteiro condensado em um documento — atualizado com os dados que estão no sistema agora.");
+  h += tabsHtml("relatorio",[["dossie","Dossiê executivo"],["encerramento","Encerramento"]],tab);
+
+  if(tab==="dossie"){
+    h += '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'+
+      '<button class="btn primary" data-act="print">Imprimir / Salvar em PDF</button>'+
+      '<button class="btn" data-act="baixar">Baixar em Markdown</button>'+
+      '<button class="btn" data-act="present">Abrir modo apresentação</button></div>';
+    const st = {ok:"Saudável",warn:"Atenção",crit:"Crítico"}[d.statusGeral]||"Em andamento";
+    h += '<div class="report">'+
+      '<div class="eyebrow">V3 Prev · Dossiê executivo · '+fmtDate(today())+'</div>'+
+      '<h1 style="font-size:30px;margin-top:10px">Captação Presencial de Clientes</h1>'+
+      '<p class="muted" style="margin-top:8px">Plano estratégico de implantação, validação e escala — auxílio-acidente.</p>'+
+      '<p style="margin-top:14px"><strong>Status:</strong> '+st+' · <strong>Fase:</strong> '+d.faseAtual.num+' — '+esc(d.faseAtual.nome)+' · <strong>Progresso:</strong> '+d.progresso+'% · <strong>Investido:</strong> '+brl(d.invReal)+' · <strong>Receita:</strong> '+brl(d.receita)+'</p>'+
+      '<p style="margin-top:14px;font-style:italic;border-left:2px solid var(--accent);padding-left:12px">'+esc(ondeEstamos(d))+'</p>'+
+      relatorioBlocos().map((b,i)=>'<h2>'+(i+1)+'. '+esc(b[0])+'</h2><p>'+esc(b[1]||"—")+'</p>').join("")+
+    '</div>';
+  }
+
+  if(tab==="encerramento"){
+    const e = s.geral.encerramento||{};
+    h += '<div class="kpis g4" style="margin-bottom:20px">'+
+      kpi("Investimento total", brl(d.invReal))+kpi("Receita total", brl(d.receita))+
+      kpi("CAC final", d.agg.pastas?brl(d.cac):"—")+kpi("ROI final", d.invReal?pct(d.roi,0):"—")+'</div>';
+    h += '<section class="blk"><div class="blk-h"><h2>Encerramento executivo</h2><span class="hint">preencha ao final do projeto — é o que o próximo projeto vai ler</span></div>'+
+      '<div class="grid g2">'+
+      field("Principais aprendizados", ta("geral.encerramento.aprendizados",{rows:4}))+
+      field("Melhores locais", ta("geral.encerramento.melhoresLocais",{rows:4}))+
+      field("Melhores práticas", ta("geral.encerramento.melhoresPraticas",{rows:4}))+
+      field("Principais erros", ta("geral.encerramento.errros",{rows:4}))+
+      field("O que deve ser mantido", ta("geral.encerramento.manter",{rows:4}))+
+      field("O que deve ser alterado", ta("geral.encerramento.alterar",{rows:4}))+
+      '</div></section>';
+  }
+  return h;
+};
+Actions.present = ()=> Present.open();
+
+/* ============================================================
+   MODO APRESENTAÇÃO
+   ============================================================ */
+const Present = {
+  on:false, i:0, slides:[],
+  build(){
+    const s=S(), d=D(), g=s.geral, recs=motor();
+    const st = {ok:"Saudável",warn:"Atenção",crit:"Crítico"}[d.statusGeral]||"Em andamento";
+    const li = a => '<ul>'+a.map(x=>'<li>'+x+'</li>').join("")+'</ul>';
+    const sl = [];
+    sl.push({e:"V3 Prev · Projeto estratégico", h1:"Captação Presencial de Clientes", b:'<p>Plano estratégico de implantação, validação e escala do canal presencial de aquisição para auxílio-acidente.</p><p class="muted">'+fmtDate(today())+'</p>'});
+    sl.push({e:"Por que estamos fazendo", h2:"Contexto e oportunidade", b:'<p>'+esc(g.contexto)+'</p><p>'+esc(g.oportunidade)+'</p>'});
+    sl.push({e:"O que precisa ser comprovado", h2:"Objetivo do projeto", b:'<p>'+esc(g.objetivo)+'</p><p><strong>Critério de sucesso:</strong> '+esc(g.criterioSucesso)+'</p><p><strong>Critério de escala:</strong> '+esc(g.criterioEscala)+'</p>'});
+    sl.push({e:"O caminho", h2:"Roadmap em 11 fases", b:'<div class="grid g2" style="gap:8px">'+s.fases.lista.map(f=>'<div style="display:flex;gap:10px;align-items:center;padding:6px 0"><span class="mono dim" style="width:52px">FASE '+f.num+'</span><span style="flex:1">'+esc(f.nome)+'</span>'+statusPill(f.status)+'</div>').join("")+'</div>'});
+    sl.push({e:"Em que etapa estamos", h2:"Fase "+d.faseAtual.num+" — "+d.faseAtual.nome, b:'<p>'+esc(ondeEstamos(d))+'</p><div style="margin-top:20px">'+bar(d.progresso, d.semProg, d.progressoEsperado)+'<p class="muted" style="margin-top:8px">'+d.progresso+'% concluído · '+d.done+' de '+d.tot+' tarefas · esperado para hoje: '+d.progressoEsperado+'%</p></div>'});
+    sl.push({e:"Quanto investimos", h2:"Investimento", b:'<div class="kpis g3">'+kpi("Orçamento",brl(d.orcamento))+kpi("Realizado",brl(d.invReal))+kpi("Desvio",(d.invReal-d.orcamento>=0?"+":"")+brl(d.invReal-d.orcamento))+'</div>'});
+    sl.push({e:"O que geramos", h2:"Resultados do piloto", b:'<div class="kpis g4">'+kpi("Leads",int(d.agg.leads))+kpi("Pastas",int(d.agg.pastas),"meta "+int(d.metaPastas))+kpi("Receita",brl(d.receita))+kpi("CAC",d.agg.pastas?brl(d.cac):"—","limite "+brl(d.pr.cacMax))+'</div>'});
+    sl.push({e:"O que está funcionando e o que não está", h2:"Análise", b:
+      '<p><strong>Ponto de atenção:</strong> '+esc(pontoAtencao())+'</p><p><strong>Oportunidade:</strong> '+esc(principalOportunidade())+'</p>'});
+    if(recs.length) sl.push({e:"O que devemos fazer agora", h2:"Ação recomendada", b:
+      '<p style="font-size:1.2em"><strong>'+esc(recs[0].acao)+'</strong></p>'+
+      li(["<strong>Responsável:</strong> "+esc(recs[0].resp), "<strong>Prazo:</strong> "+recs[0].prazo+" dias", "<strong>Indicador de sucesso:</strong> "+esc(recs[0].ind)])});
+    const gono = g.goNoGo||{};
+    sl.push({e:"Devemos continuar? Devemos escalar?", h2:"Decisão", b: gono.decisao?
+      '<p style="font-size:1.4em"><strong>'+esc(gono.decisao)+'</strong></p><p class="muted">Registrada em '+fmtDate(gono.data)+' por '+esc(gono.por||"—")+'.</p><p>'+esc(gono.justificativa||"")+'</p>'
+      : '<p>Decisão GO / NO GO ainda não registrada. Os critérios estão definidos e serão avaliados ao fim do piloto.</p>'});
+    sl.push({e:"Próximos passos", h2:"O que vem agora", b: li(d.nextList.slice(0,5).map(x=>esc(x.t.titulo)+' <span class="muted">— '+esc(x.t.responsavel||"sem responsável")+', '+(x.t.prazo?fmtDate(x.t.prazo):"sem prazo")+'</span>')) || "<p>Todas as tarefas concluídas.</p>"});
+    return sl;
+  },
+  open(){
+    this.slides = this.build(); this.i=0; this.on=true;
+    const r = $("#present-root");
+    r.innerHTML = '<div class="present"><div class="present-body"><div class="slide" id="slide"></div></div>'+
+      '<div class="present-foot"><button class="btn sm" id="p-prev">← Anterior</button>'+
+      '<span class="pg" id="p-pg"></span>'+
+      '<span style="display:flex;gap:6px"><button class="btn sm" id="p-next">Próximo →</button><button class="btn sm ghost" id="p-close">Sair</button></span></div></div>';
+    $("#p-prev").onclick=()=>this.go(-1); $("#p-next").onclick=()=>this.go(1); $("#p-close").onclick=()=>this.close();
+    this.draw();
+  },
+  draw(){
+    const s = this.slides[this.i];
+    $("#slide").innerHTML = '<div class="s-eyebrow">'+esc(s.e)+'</div>'+(s.h1?'<h1>'+esc(s.h1)+'</h1>':'')+(s.h2?'<h2>'+esc(s.h2)+'</h2>':'')+'<div class="s-body">'+s.b+'</div>';
+    $("#p-pg").textContent = (this.i+1)+" / "+this.slides.length;
+  },
+  go(n){ this.i = clamp(this.i+n, 0, this.slides.length-1); this.draw(); },
+  close(){ this.on=false; $("#present-root").innerHTML=""; },
+  key(e){
+    if(e.key==="ArrowRight"||e.key===" "||e.key==="PageDown"){ e.preventDefault(); this.go(1); }
+    else if(e.key==="ArrowLeft"||e.key==="PageUp"){ e.preventDefault(); this.go(-1); }
+    else if(e.key==="Escape"){ this.close(); }
+  }
+};
+
+/* ============================================================
+   INÍCIO
+   ============================================================ */
+
+/* ---------- feedback de gravação ---------- */
+App.marcarSalvo = function(){
+  const e = document.getElementById("salvo"); if(!e) return;
+  e.textContent = "salvo"; e.classList.add("on");
+  clearTimeout(App._st); App._st = setTimeout(()=>{ e.classList.remove("on"); }, 1800);
+};
+
+/* ---------- quem alterou o quê ---------- */
+const NOME_DOC = {geral:"Dossiê do projeto", premissas:"Premissas", fases:"Fases e tarefas", marcos:"Marcos",
+  territorios:"Territórios", pesquisa:"Pesquisa de campo", equipe:"Equipe", piloto:"Piloto", tecnologia:"Integração",
+  investimento:"Investimento", acoes:"Matriz de ações", decisoes:"Decisões", riscos:"Riscos",
+  compliance:"Compliance", documentos:"Documentos"};
+function quandoRelativo(iso){
+  const min = Math.round((Date.now()-new Date(iso).getTime())/60000);
+  if(min < 1) return "agora";
+  if(min < 60) return "há "+min+" min";
+  const h = Math.round(min/60); if(h < 24) return "há "+h+"h";
+  return fmtDate(String(iso).slice(0,10));
+}
+function blocoHistorico(){
+  const h = Store.historico||[];
+  if(!h.length) return "";
+  return '<section class="blk" style="margin-top:26px"><div class="blk-h"><h2>Últimas alterações</h2>'+
+    '<span class="hint">quem mexeu no dossiê e quando</span></div><div class="card">'+
+    h.map(r=>'<div class="hist"><span class="hq">'+esc(r.email)+'</span>'+
+      '<span class="ho">'+esc(NOME_DOC[r.chave]||r.chave)+'</span>'+
+      '<span class="hd">'+esc(quandoRelativo(r.em))+'</span></div>').join("")+
+    '</div></section>';
+}
+const _viewVisao = App.view_visao;
+App.view_visao = function(){ return _viewVisao.call(this) + blocoHistorico(); };
+
+/* ---------- carrega a biblioteca do Supabase, com CDN reserva ---------- */
+function carregarSupabase(){
+  return new Promise(function(resolve){
+    if(window.supabase && window.supabase.createClient) return resolve(true);
+    const urls = ["https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
+                  "https://unpkg.com/@supabase/supabase-js@2"];
+    let i = 0;
+    (function tenta(){
+      if(i >= urls.length) return resolve(false);
+      const sc = document.createElement("script");
+      sc.src = urls[i++];
+      sc.onload  = function(){ resolve(!!(window.supabase && window.supabase.createClient)); };
+      sc.onerror = tenta;
+      document.head.appendChild(sc);
+    })();
+  });
+}
+
+/* ---------- tela de login ---------- */
+const Login = {
+  el(){ return document.getElementById("login"); },
+  mostrar(msg){
+    const e = this.el(); e.hidden = false;
+    e.innerHTML = '<div class="lg-card">'+
+      '<div class="lg-brand">V3 <span>PREV</span></div>'+
+      '<h1>Dossiê da Captação Presencial</h1>'+
+      '<p class="lg-sub">Acesso restrito à equipe do projeto. Informe seu e-mail corporativo e enviaremos um link de entrada — não há senha para decorar.</p>'+
+      (msg? '<div class="lg-msg">'+esc(msg)+'</div>' : '')+
+      '<form id="lg-form"><label class="fl"><span>E-mail</span>'+
+      '<input class="f" type="email" id="lg-email" required autocomplete="email" placeholder="nome@v3prev.com.br"></label>'+
+      '<button class="btn primary" type="submit" style="margin-top:12px;width:100%;justify-content:center">Receber link de acesso</button></form>'+
+      '<p class="lg-pe">O link vale por uma hora e abre o dossiê já autenticado.</p></div>';
+    const f = document.getElementById("lg-form");
+    f.onsubmit = async ev=>{
+      ev.preventDefault();
+      const email = document.getElementById("lg-email").value.trim().toLowerCase();
+      if(!email) return;
+      f.querySelector("button").disabled = true;
+      f.querySelector("button").textContent = "Enviando…";
+      const { error } = await Store.sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.origin + location.pathname } });
+      if(error) return this.mostrar("Não foi possível enviar: "+error.message);
+      this.aviso("Link enviado para "+email, "Abra seu e-mail e clique no link para entrar. Pode levar um minuto — confira também a caixa de spam.");
+    };
+  },
+  aviso(t, p){
+    const e = this.el(); e.hidden = false;
+    e.innerHTML = '<div class="lg-card"><div class="lg-brand">V3 <span>PREV</span></div><h1>'+esc(t)+'</h1><p class="lg-sub">'+esc(p)+'</p></div>';
+  },
+  carregando(t){
+    const e = this.el(); e.hidden = false;
+    e.innerHTML = '<div class="lg-card"><div class="lg-brand">V3 <span>PREV</span></div><h1>'+esc(t)+'</h1></div>';
+  },
+  semAcesso(email, det){
+    this.aviso("Este e-mail ainda não tem acesso",
+      "O endereço "+email+" não está na lista de pessoas do projeto. Peça a quem administra o dossiê para incluir você."+(det? " ("+det+")":""));
+    const e = this.el();
+    e.querySelector(".lg-card").insertAdjacentHTML("beforeend",
+      '<button class="btn" id="lg-sair" style="margin-top:14px">Entrar com outro e-mail</button>');
+    document.getElementById("lg-sair").onclick = ()=>Store.sair();
+  },
+  erroBiblioteca(){
+    this.aviso("Não foi possível carregar a biblioteca de acesso",
+      "O navegador não conseguiu baixar o componente que conversa com o banco. Verifique a conexão e recarregue a página. Se a rede da empresa bloqueia CDNs externas, avise para liberar cdn.jsdelivr.net e unpkg.com.");
+  },
+  erroConfig(det){
+    this.aviso("Falta configurar o acesso ao banco",
+      "Abra o arquivo config.js do projeto e preencha o endereço e a chave pública do Supabase, conforme o README."+(det? " ("+det+")":""));
+  },
+  esconder(){ const e = this.el(); e.hidden = true; e.innerHTML = ""; }
+};
+
+Store.init();
+})();
+
+</script>
+</body>
+</html>
