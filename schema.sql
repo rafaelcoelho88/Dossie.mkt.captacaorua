@@ -126,6 +126,6 @@ insert into public.membros (email, nome, papel) values
   ('rafael.coelho@v3prev.com.br', 'Rafael Coelho',       'admin'),
   ('guilherme.miranda@v3prev.com.br',     'Diretor de Marketing','editor'),
   ('yuri.ferracioli@v3prev.com.br',     'Diretor Comercial',   'editor'),
-  ('emely.coelho@v3prev.com.br',    'Diretor Financeiro',  'editor')
-  ('jessica.ellen@v3prev.com.br',    'Diretor Auditoria',  'editor')
+  ('emely.coelho@v3prev.com.br',    'Diretor Financeiro',  'editor'),
+  ('jessica.ellen@v3prev.com.br',    'Diretor Auditoria',  'editor'),
 on conflict (email) do nothing;
