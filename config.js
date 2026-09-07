@@ -8,6 +8,6 @@
    de membros. Nunca coloque aqui a chave "service_role".
 ------------------------------------------------------------------- */
 window.DOSSIE_CONFIG = {
-  supabaseUrl:     "COLE_AQUI_A_PROJECT_URL",
-  supabaseAnonKey: "COLE_AQUI_A_CHAVE_ANON"
+  supabaseUrl:     "https://abcdefgh.supabase.co",
+  supabaseAnonKey: "eyJhbGciOi..."
 };
