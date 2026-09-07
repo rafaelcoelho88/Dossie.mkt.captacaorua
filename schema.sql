@@ -10,8 +10,8 @@
 --    papel: 'admin' e 'editor' podem alterar; 'leitor' só enxerga.
 -- ---------------------------------------------------------------------
 create table if not exists public.membros (
-  email     text primary key,
-  nome      text,
+  email     rafael.coelho@v3prev.com.br,
+  nome      Rafael Coelho,
   papel     text not null default 'editor' check (papel in ('admin','editor','leitor')),
   criado_em timestamptz not null default now()
 );
@@ -124,7 +124,8 @@ end $$;
 -- ---------------------------------------------------------------------
 insert into public.membros (email, nome, papel) values
   ('rafael.coelho@v3prev.com.br', 'Rafael Coelho',       'admin'),
-  ('marketing@v3prev.com.br',     'Diretor de Marketing','editor'),
-  ('comercial@v3prev.com.br',     'Diretor Comercial',   'editor'),
-  ('financeiro@v3prev.com.br',    'Diretor Financeiro',  'editor')
+  ('guilherme.miranda@v3prev.com.br',     'Diretor de Marketing','editor'),
+  ('yuri.ferracioli@v3prev.com.br',     'Diretor Comercial',   'editor'),
+  ('emely.coelho@v3prev.com.br',    'Diretor Financeiro',  'editor')
+  ('jessica.ellen@v3prev.com.br',    'Diretor Auditoria',  'editor')
 on conflict (email) do nothing;
